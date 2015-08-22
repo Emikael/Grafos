@@ -3,24 +3,26 @@ package br.com.unisul.grafos.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grafo {
+public class GrafoListaAdj implements GrafoService {
 	
 	List<Vertice> _vertices;
     List<Aresta> _arestas;
 
-    public Grafo() {
+    public GrafoListaAdj() {
         _vertices = new ArrayList<Vertice>();
         _arestas = new ArrayList<Aresta>();
     }
 
-    private Vertice addVertice(String nome) {
+    @Override
+    public Vertice addVertice(String nome) {
         final Vertice vertice = new Vertice(nome);
         _vertices.add(vertice);
         
         return vertice;
     }
 
-    private Aresta addAresta(Vertice inicio, Vertice fim) {
+    @Override
+    public Aresta addAresta(Vertice inicio, Vertice fim) {
         final Aresta aresta = new Aresta(inicio, fim);
         inicio.addAdj(aresta);
         _arestas.add(aresta);
@@ -28,16 +30,16 @@ public class Grafo {
         return aresta;
     }
 
-    @Override
-    public String toString() {
-    	final StringBuilder grafo = new StringBuilder();
+	@Override
+	public String exibirGrafo() {
+		final StringBuilder grafo = new StringBuilder();
     	Vertice verticeFim = new Vertice();
     	
     	for (Vertice verticeInicio : _vertices) {
-            grafo.append(verticeInicio.getNome()).append(" --> ");
+            grafo.append(verticeInicio.getNome()).append(" ---> ");
             
             for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
-                verticeFim = aresta._fim;
+                verticeFim = aresta.getFim();
                 grafo.append(verticeFim.getNome()).append("-> ");
             }
             
@@ -49,22 +51,6 @@ public class Grafo {
         }
     	
         return grafo.toString();
-    }
-
-    public static void main(String[] args) {
-        final Grafo g = new Grafo();
-        Vertice s = g.addVertice("s");
-        Vertice t = g.addVertice("t");
-        Vertice y = g.addVertice("y");
-        Vertice u = g.addVertice("u");
-        Aresta st = g.addAresta(s, t);
-        Aresta sy = g.addAresta(s, y);
-        Aresta ty = g.addAresta(t, y);
-        Aresta yt = g.addAresta(y, t);
-        Aresta su = g.addAresta(s, u);
-        Aresta ut = g.addAresta(u, t);
-        
-        System.out.println(g);
-    }
+	}
 
 }
