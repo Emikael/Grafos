@@ -3,7 +3,7 @@ package br.com.unisul.grafos.impl;
 public class MenuPrincipal {
 
 	public static void main(String[] args) {
-		mostraGrafoAdjacente();
+//		mostraGrafoAdjacente();
 		mostraGrafoMatrizAdjacente();
 	}
 	
