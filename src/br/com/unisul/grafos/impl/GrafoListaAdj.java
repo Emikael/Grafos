@@ -3,17 +3,16 @@ package br.com.unisul.grafos.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrafoListaAdj implements GrafoService {
+public class GrafoListaAdj {
 	
-	List<Vertice> _vertices;
-    List<Aresta> _arestas;
+	private List<Vertice> _vertices;
+    private List<Aresta> _arestas;
 
     public GrafoListaAdj() {
         _vertices = new ArrayList<Vertice>();
         _arestas = new ArrayList<Aresta>();
     }
 
-    @Override
     public Vertice addVertice(String nome) {
         final Vertice vertice = new Vertice(nome);
         _vertices.add(vertice);
@@ -21,7 +20,6 @@ public class GrafoListaAdj implements GrafoService {
         return vertice;
     }
 
-    @Override
     public Aresta addAresta(Vertice inicio, Vertice fim) {
         final Aresta aresta = new Aresta(inicio, fim);
         inicio.addAdj(aresta);
@@ -30,7 +28,6 @@ public class GrafoListaAdj implements GrafoService {
         return aresta;
     }
 
-	@Override
 	public String exibirGrafo() {
 		final StringBuilder grafo = new StringBuilder();
     	Vertice verticeFim = new Vertice();
