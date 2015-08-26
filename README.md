@@ -1,6 +1,6 @@
 # Projeto-Grafos
 
-Trabalho sobre representação gráfica de quadro tipos de grafos:  
+Trabalho da materia Grafos sobre implementação de grafos dos tipos:  
  
  -Listas de adjacência  
  
