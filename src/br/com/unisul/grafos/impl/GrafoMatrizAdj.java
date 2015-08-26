@@ -44,7 +44,7 @@ public class GrafoMatrizAdj implements GrafoService {
 
 	private void buscaLigacao(Vertice vertice, StringBuilder grafo) {
 		for (Vertice verticeFim : _vertices) {
-			if (verticeFim.temLigacao(vertice)) {
+			if (vertice.temLigacao(verticeFim)) {
 				grafo.append("|1|");
 			} else {
 				grafo.append("|0|");
