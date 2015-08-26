@@ -28,4 +28,16 @@ public class Vertice {
     public String getNome() {
     	return this._nome.toUpperCase();
     }
+    
+    public boolean temLigacao(Vertice vertice) {
+    	for (Aresta aresta : _adjacente) {
+    		for (Aresta arestaFim : vertice.getListaAdjacentes()) {
+				if (aresta.getInicio().equals(arestaFim.getFim()) || aresta.getFim().equals(aresta.getInicio())) {
+					return true;
+				}
+			}
+    	}
+    	return false;
+    }
+    
 }

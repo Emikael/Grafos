@@ -17,5 +17,5 @@ public class Aresta {
 	public Vertice getFim() {
 		return _fim;
 	}
-	
+
 }

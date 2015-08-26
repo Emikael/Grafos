@@ -3,9 +3,41 @@ package br.com.unisul.grafos.impl;
 public class MenuPrincipal {
 
 	public static void main(String[] args) {
-		mostraGrafoAdjacente();
+//		mostraGrafoAdjacente();
 		mostraGrafoMatrizAdjacente();
-		mostraGrafoMatrizIncidencia();
+//		mostraGrafoMatrizIncidencia();
+		mostraGrafoMatrizTeste();
+	}
+	
+	@SuppressWarnings("unused")
+	private static void mostraGrafoMatrizTeste() {
+		System.out.println("### Grafo Matriz de Incidencia ###");
+		
+		final GrafoService grafo = new GrafoMatrizAdj();
+        Vertice a = grafo.addVertice("a");
+        Vertice b = grafo.addVertice("b");
+        Vertice c = grafo.addVertice("c");
+        Vertice d = grafo.addVertice("d");
+        Vertice e = grafo.addVertice("e");
+        
+        Aresta ac = grafo.addAresta(a, c);
+        
+        Aresta bc = grafo.addAresta(b, c);
+        
+        Aresta ca = grafo.addAresta(c, a);
+        Aresta cb = grafo.addAresta(c, b);
+        Aresta cd = grafo.addAresta(c, d);
+        Aresta ce = grafo.addAresta(c, e);
+        
+        Aresta dc = grafo.addAresta(d, c);
+        Aresta de = grafo.addAresta(d, e);
+        
+        Aresta ec = grafo.addAresta(e, c);
+        Aresta ed = grafo.addAresta(e, d);
+        
+        System.out.println(grafo.exibirGrafo());
+        
+        System.out.println("---------------------------------------");
 	}
 	
 	@SuppressWarnings("unused")
@@ -47,8 +79,8 @@ public class MenuPrincipal {
 	private static void mostraGrafoMatrizAdjacente() {
 		System.out.println("### Grafo Matriz Adjacente ###");
 		
-		final GrafoMatrizAdj grafo = new GrafoMatrizAdj(5);
-		grafo.addLigacao(0,2);
+		final GrafoMatrizAdj_old grafo = new GrafoMatrizAdj_old(5);
+		grafo.addLigacao(0, 2);
 		grafo.addLigacao(1, 2);
 		grafo.addLigacao(2, 0);
 		grafo.addLigacao(2, 1);
