@@ -1,11 +1,11 @@
-package br.com.unisul.grafos.impl;
+package br.com.unisul.emikaelsilveira.grafos.entity;
 
 public class Aresta {
 
 	private Vertice _inicio;
     private Vertice _fim;
 
-    Aresta(Vertice inicio, Vertice fim) {
+    public Aresta(Vertice inicio, Vertice fim) {
         this._inicio = inicio;
         this._fim = fim;
     }

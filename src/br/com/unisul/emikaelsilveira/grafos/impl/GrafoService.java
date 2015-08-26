@@ -1,7 +1,10 @@
-package br.com.unisul.grafos.impl;
+package br.com.unisul.emikaelsilveira.grafos.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.unisul.emikaelsilveira.grafos.entity.Aresta;
+import br.com.unisul.emikaelsilveira.grafos.entity.Vertice;
 
 public abstract class GrafoService {
 	

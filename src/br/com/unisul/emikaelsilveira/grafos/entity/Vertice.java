@@ -1,4 +1,4 @@
-package br.com.unisul.grafos.impl;
+package br.com.unisul.emikaelsilveira.grafos.entity;
 
 import java.util.ArrayList;
 import java.util.List;

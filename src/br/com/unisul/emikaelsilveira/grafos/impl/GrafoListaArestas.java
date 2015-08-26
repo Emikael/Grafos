@@ -1,4 +1,6 @@
-package br.com.unisul.grafos.impl;
+package br.com.unisul.emikaelsilveira.grafos.impl;
+
+import br.com.unisul.emikaelsilveira.grafos.entity.Aresta;
 
 public class GrafoListaArestas extends GrafoService {
 
