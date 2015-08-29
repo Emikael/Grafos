@@ -1,16 +1,16 @@
-package br.com.unisul.emikaelsilveira.grafos.impl;
+package br.com.unisul.grafos.impl;
 
-import br.com.unisul.emikaelsilveira.grafos.entity.Aresta;
-import br.com.unisul.emikaelsilveira.grafos.entity.Vertice;
+import br.com.unisul.grafos.entity.Aresta;
+import br.com.unisul.grafos.entity.Vertice;
 
-public class GrafoMatrizIncidencia extends GrafoService {
+public class GrafoMatrizIncidencia extends Grafo {
 	
     public GrafoMatrizIncidencia() {
         super();
     }
 
     @Override
-	public String exibirGrafo() {
+	public String toString() {
 		final StringBuilder grafo = new StringBuilder();
     	
 		montaCabecalhoGrafo(grafo);

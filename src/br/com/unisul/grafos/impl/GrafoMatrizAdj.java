@@ -1,15 +1,15 @@
-package br.com.unisul.emikaelsilveira.grafos.impl;
+package br.com.unisul.grafos.impl;
 
-import br.com.unisul.emikaelsilveira.grafos.entity.Vertice;
+import br.com.unisul.grafos.entity.Vertice;
 
-public class GrafoMatrizAdj extends GrafoService {
+public class GrafoMatrizAdj extends Grafo {
 
     public GrafoMatrizAdj() {
         super();
     }
-
+    
     @Override
-	String exibirGrafo() {
+	public String toString() {
 		final StringBuilder grafo = new StringBuilder();
     	montaCabecalhoGrafo(grafo);
     	for (Vertice vertice : _vertices) {

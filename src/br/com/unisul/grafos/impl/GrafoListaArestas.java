@@ -1,15 +1,15 @@
-package br.com.unisul.emikaelsilveira.grafos.impl;
+package br.com.unisul.grafos.impl;
 
-import br.com.unisul.emikaelsilveira.grafos.entity.Aresta;
+import br.com.unisul.grafos.entity.Aresta;
 
-public class GrafoListaArestas extends GrafoService {
+public class GrafoListaArestas extends Grafo {
 
     public GrafoListaArestas() {
         super();
     }
     
     @Override
-	String exibirGrafo() {
+	public String toString() {
 		final StringBuilder arestasIniciais = new StringBuilder("g = (");
 		final StringBuilder arestasFinais = new StringBuilder("h = (");
     	
