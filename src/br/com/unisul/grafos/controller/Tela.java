@@ -18,6 +18,9 @@ import javax.swing.JTextArea;
 
 import br.com.unisul.grafos.impl.Grafo;
 import br.com.unisul.grafos.impl.GrafoListaAdj;
+import br.com.unisul.grafos.impl.GrafoListaArestas;
+import br.com.unisul.grafos.impl.GrafoMatrizAdj;
+import br.com.unisul.grafos.impl.GrafoMatrizIncidencia;
 
 
 public class Tela extends JFrame {
@@ -48,6 +51,7 @@ public class Tela extends JFrame {
 		
 		setLayout(new BorderLayout());
 		setTitle(titulo);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setMinimumSize(new Dimension(1000,670));
 		setPreferredSize(getSize());
@@ -69,7 +73,7 @@ public class Tela extends JFrame {
 			
 			_painelSaidaDoGrafo.setBorder(BorderFactory.createTitledBorder("Resultado do grafo"));
 			_painelSaidaDoGrafo.setLayout(new FlowLayout());
-			_painelSaidaDoGrafo.setSize(new Dimension(200, 200));
+			_painelSaidaDoGrafo.setSize(new Dimension(200, 150));
 			
 			_saidaDoGrafo = new JTextArea("### GRAFOS ###\n", 100, 30);
 			JScrollPane scrollPanel = new JScrollPane(_saidaDoGrafo);
@@ -113,6 +117,14 @@ public class Tela extends JFrame {
 			_painelInfo.setSize(new Dimension(100, 50));
 			
 			_botaoNovoGrafo = new JButton("Novo Grafo");
+			_botaoNovoGrafo.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+//					_painelDesenho = new PainelDesenho(, _grafo);
+				}
+			});
+			
 			_painelInfo.add(_botaoNovoGrafo);
 			
 			_radioDirecionado = new JRadioButton("Direcionado");
@@ -150,14 +162,36 @@ public class Tela extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					geraGrafoAPartirDo(new GrafoListaAdj());
+					geraGrafoAPartirDo(new GrafoListaAdj(_grafo));
 				}
 			});
 			
-			
 			_botaoMatrizAdj = new JButton("Gerar Matriz de Adjacencia");
+			_botaoMatrizAdj.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					geraGrafoAPartirDo(new GrafoMatrizAdj(_grafo));
+				}
+			});
+			
 			_botaoMatrizIncidencia = new JButton("Gerar Matriz de Incidencia");
+			_botaoMatrizIncidencia.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					geraGrafoAPartirDo(new GrafoMatrizIncidencia(_grafo));
+				}
+			});
+			
 			_botaoListaArestas = new JButton("Gerar Lista de Arestas");
+			_botaoListaArestas.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					geraGrafoAPartirDo(new GrafoListaArestas(_grafo));
+				}
+			});
 			
 			_painelBotoes.add(_botaoListaAdj);
 			_painelBotoes.add(_botaoMatrizAdj);
@@ -168,10 +202,21 @@ public class Tela extends JFrame {
 		return _painelBotoes;
 	}
 	
-	public void geraGrafoAPartirDo(final Grafo grafo) {
+	public void geraGrafoAPartirDo(Grafo grafo) {
 		if (grafo instanceof GrafoListaAdj) {
-			GrafoListaAdj grafoListaAdj = (GrafoListaAdj) _grafo;
-			_saidaDoGrafo.setText(grafoListaAdj.toString());
+			_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
+		}
+		
+		if (grafo instanceof GrafoMatrizAdj) {
+			_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
+		}
+		
+		if (grafo instanceof GrafoMatrizIncidencia) {
+			_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
+		}
+		
+		if (grafo instanceof GrafoListaArestas) {
+			_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
 		}
 		
 	}

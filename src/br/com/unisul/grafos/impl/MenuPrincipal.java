@@ -6,10 +6,10 @@ import br.com.unisul.grafos.entity.Vertice;
 public class MenuPrincipal {
 
 	public static void main(String[] args) {
-		geraGrafoAPartirDo(new GrafoListaAdj());
-		geraGrafoAPartirDo(new GrafoMatrizAdj());
-		geraGrafoAPartirDo(new GrafoMatrizIncidencia());
-		geraGrafoAPartirDo(new GrafoListaArestas());
+//		geraGrafoAPartirDo(new GrafoListaAdj());
+//		geraGrafoAPartirDo(new GrafoMatrizAdj());
+//		geraGrafoAPartirDo(new GrafoMatrizIncidencia());
+//		geraGrafoAPartirDo(new GrafoListaArestas());
 	}
 	
 	private static void geraGrafoAPartirDo(final Grafo grafo) {
