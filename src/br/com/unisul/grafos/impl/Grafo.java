@@ -74,8 +74,8 @@ public class Grafo {
     	return false;
     }
     
-    private String getId() {
-    	return String.valueOf(_vertices.size() + 1);
+    private int getId() {
+    	return _vertices.size() + 1;
     }
     
 }

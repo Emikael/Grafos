@@ -20,8 +20,8 @@ public class GrafoListaArestas extends Grafo {
 		final StringBuilder arestasFinais = new StringBuilder("h = (");
     	
 		for (Aresta aresta : _arestas) {
-			arestasIniciais.append(aresta.getInicio().getNome()).append(", ");
-			arestasFinais.append(aresta.getFim().getNome()).append(", ");
+			arestasIniciais.append(aresta.getInicio().getId()).append(", ");
+			arestasFinais.append(aresta.getFim().getId()).append(", ");
 		}
     	
     	if (arestasIniciais.toString().endsWith(", ")) {

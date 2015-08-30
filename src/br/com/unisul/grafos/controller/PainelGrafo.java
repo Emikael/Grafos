@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 import br.com.unisul.grafos.impl.Grafo;
 
-public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
+public class PainelGrafo extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	private Grafo _grafo;
@@ -32,7 +32,7 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 	}
 	
 	
-	public PainelDesenho(Tela tela, Grafo grafo) {
+	public PainelGrafo(Tela tela, Grafo grafo) {
 		this.setLayout(new FlowLayout());
 		this.setBorder(BorderFactory.createTitledBorder("Grafo"));
 		this.setSize(new Dimension(900, 200));
@@ -45,6 +45,8 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 		this._tela = tela;
 		this._grafo = grafo;
 		this._situacao = EstadoDaAresta.NENHUM;
+		
+		this.repaint();
 	}
 	
 	@Override
@@ -133,6 +135,10 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+	
+	public void limpaPainel() {
+		this.removeAll();
 	}
 
 }

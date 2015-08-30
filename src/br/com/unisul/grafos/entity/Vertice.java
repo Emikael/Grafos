@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Vertice {
 
-	private String _nome;
+	private int _id;
     private List<Aresta> _adjacente;
     private double _posicaoX;
 	private double _posicaoY;
@@ -23,8 +23,8 @@ public class Vertice {
     	super();
     }
 
-    public Vertice(String nome, double posicaoX, double posicaoY) {
-        this._nome = nome;
+    public Vertice(int id, double posicaoX, double posicaoY) {
+        this._id = id;
         this._adjacente = new ArrayList<Aresta>();
         this._posicaoX = posicaoX;
         this._posicaoY = posicaoY;
@@ -41,12 +41,16 @@ public class Vertice {
         _adjacente.add(aresta);
     }
     
-    public String getNome() {
-    	return this._nome.toUpperCase();
+    public int getId() {
+    	return this._id;
     }
     
     public boolean temLigacao(Vertice vertice) {
     	for (Aresta aresta : _adjacente) {
+    		
+    		if (this._posicaoX == vertice.get_posicaoX() && this._posicaoY == vertice.get_posicaoY()) {
+				continue;
+			}
     		for (Aresta arestaFim : vertice.getListaAdjacentes()) {
 				if (aresta.getInicio().equals(arestaFim.getFim()) || aresta.getFim().equals(aresta.getInicio())) {
 					return true;
@@ -70,8 +74,8 @@ public class Vertice {
 	public void desenharNome(Graphics2D graphics2D) {
 		final FontMetrics metrics = graphics2D.getFontMetrics();
 		
-		graphics2D.drawString(_nome, 
-				(float) (_centroVertice.getX() - (metrics.stringWidth(_nome) / 2) + 1), 
+		graphics2D.drawString(String.valueOf(_id), 
+				(float) (_centroVertice.getX() - (metrics.stringWidth(String.valueOf(_id)) / 2) + 1), 
 				(float) (_centroVertice.getY() + metrics.getHeight() - 10));
 		
 	}

@@ -25,11 +25,11 @@ public class GrafoListaAdj extends Grafo {
 				continue;
 			}
     		
-            grafo.append(verticeInicio.getNome()).append(" --> ");
+            grafo.append(verticeInicio.getId()).append(" --> ");
             
             for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
                 verticeFim = aresta.getFim();
-                grafo.append(verticeFim.getNome()).append(", ");
+                grafo.append(verticeFim.getId()).append(", ");
             }
             
             if (grafo.toString().endsWith(", ")) {

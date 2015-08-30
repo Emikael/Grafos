@@ -25,6 +25,7 @@ import br.com.unisul.grafos.impl.GrafoMatrizIncidencia;
 
 public class Tela extends JFrame {
 
+	private static final String GRAFOS = "### GRAFOS ###\n";
 	private static final long serialVersionUID = 1L;
 	private JPanel _painelInfo;
 	private JPanel _painelDesenho;
@@ -46,6 +47,10 @@ public class Tela extends JFrame {
 	private JTextArea _saidaDoGrafo;
 	
 	private Grafo _grafo;
+	
+	public Tela() {
+		
+	}
 	
 	public Tela(String titulo) throws HeadlessException {
 		
@@ -75,7 +80,7 @@ public class Tela extends JFrame {
 			_painelSaidaDoGrafo.setLayout(new FlowLayout());
 			_painelSaidaDoGrafo.setSize(new Dimension(200, 150));
 			
-			_saidaDoGrafo = new JTextArea("### GRAFOS ###\n", 100, 30);
+			_saidaDoGrafo = new JTextArea(GRAFOS, 100, 30);
 			JScrollPane scrollPanel = new JScrollPane(_saidaDoGrafo);
 			
 			_painelSaidaDoGrafo.add(scrollPanel);
@@ -121,7 +126,7 @@ public class Tela extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					_painelDesenho = new PainelDesenho(, _grafo);
+					limpaTela();
 				}
 			});
 			
@@ -144,7 +149,7 @@ public class Tela extends JFrame {
 	
 	private JPanel getPainelDesenho() {
 		if (_painelDesenho == null) {
-			_painelDesenho = new PainelDesenho(this, _grafo);
+			_painelDesenho = new PainelGrafo(this, _grafo);
 		}
 		return _painelDesenho;
 	}
@@ -219,6 +224,13 @@ public class Tela extends JFrame {
 			_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
 		}
 		
+	}
+	
+	public void limpaTela() {
+		_grafo = new Grafo();
+		_painelDesenho = new PainelGrafo(this, _grafo);
+		_radioVertice.setSelected(true);
+		_saidaDoGrafo.setText(GRAFOS);
 	}
 	
 	public JRadioButton getRadioDirecionado() {

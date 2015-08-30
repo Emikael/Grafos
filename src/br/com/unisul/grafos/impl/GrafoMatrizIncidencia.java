@@ -21,14 +21,14 @@ public class GrafoMatrizIncidencia extends Grafo {
 		grafo.append("#### GRAFO MATRIZ DE INCIDENCIA ####\n");
 		montaCabecalhoGrafo(grafo);
     	for (Vertice vertice : _vertices) {
-    		grafo.append(vertice.getNome());
+    		grafo.append(vertice.getId());
     		for (Aresta aresta : _arestas) {
-				if (vertice.getNome().equals(aresta.getInicio().getNome())) {
+				if (vertice.getId() == aresta.getInicio().getId()) {
 					grafo.append("|  1  |");
 					continue;
 				}
 				
-				if (vertice.getNome().equals(aresta.getFim().getNome())) {
+				if (vertice.getId() == aresta.getFim().getId()) {
 					grafo.append("| -1  |");
 					continue;
 				}
