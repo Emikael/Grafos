@@ -10,6 +10,10 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Classe Vertice.
+ * Controla todas as ações dos vertices.
+ */
 public class Vertice {
 
 	private int _id;
@@ -23,6 +27,11 @@ public class Vertice {
     	super();
     }
 
+    /*
+     * Construtor da classe.
+     * Cria o desenho de um circulo para representar um vertice.
+     * Calcula o centro do vertice.
+     */
     public Vertice(int id, double posicaoX, double posicaoY) {
         this._id = id;
         this._adjacente = new ArrayList<Aresta>();
@@ -33,6 +42,9 @@ public class Vertice {
 		this._centroVertice.setLocation(_posicaoX + (40 / 2), _posicaoY + (40 / 2));
     }
     
+    /*
+     * Lista de arestas ligadas ao vertice.
+     */
     public List<Aresta> getListaAdjacentes() {
     	return this._adjacente;
     }
@@ -45,21 +57,9 @@ public class Vertice {
     	return this._id;
     }
     
-    public boolean temLigacao(Vertice vertice) {
-    	for (Aresta aresta : _adjacente) {
-    		
-    		if (this._posicaoX == vertice.get_posicaoX() && this._posicaoY == vertice.get_posicaoY()) {
-				continue;
-			}
-    		for (Aresta arestaFim : vertice.getListaAdjacentes()) {
-				if (aresta.getInicio().equals(arestaFim.getFim()) || aresta.getFim().equals(aresta.getInicio())) {
-					return true;
-				}
-			}
-    	}
-    	return false;
-    }
-    
+    /*
+     * Metodo que desenha o vertice na tela.
+     */
     public void desenharVertice(Graphics2D graphics2D) {
 		graphics2D.setPaint(Color.WHITE);
 		graphics2D.fill(_desenhoVertice);
@@ -71,6 +71,9 @@ public class Vertice {
 		desenharNome(graphics2D);
 	}
 	
+    /*
+     * Metodo que desenho o nome do vertice no centro do vertice.
+     */
 	public void desenharNome(Graphics2D graphics2D) {
 		final FontMetrics metrics = graphics2D.getFontMetrics();
 		
@@ -80,11 +83,17 @@ public class Vertice {
 		
 	}
 	
+	/*
+	 * Metodo que verifica se na posição passada como parametro existe algum vertice.
+	 */
 	public boolean isExisteVerticeNo(Point2D ponto) {
 		return _desenhoVertice.contains(ponto);
 	}
 	
-	public Point2D getPontoCircunferenciaDoVertice(double angulo) {
+	/*
+	 * Metodo que calcula a posição da circunferencia do vertice.
+	 */
+	public Point2D getPontoDaCircunferenciaDoVertice(double angulo) {
 		final Point2D pontoDaCircunferencia = new Point2D.Double(_centroVertice.getX(), _centroVertice.getY());
 		
 		final double posicaoX = Math.cos(angulo) * (40 / 2);

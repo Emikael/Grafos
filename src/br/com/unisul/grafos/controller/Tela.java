@@ -23,7 +23,10 @@ import br.com.unisul.grafos.impl.GrafoListaArestas;
 import br.com.unisul.grafos.impl.GrafoMatrizAdj;
 import br.com.unisul.grafos.impl.GrafoMatrizIncidencia;
 
-
+/*
+ *	TELA DA APLICAÇÂO 
+ *
+ */
 public class Tela extends JFrame {
 
 	private static final String GRAFOS = "### GRAFOS ###\n";
@@ -53,6 +56,9 @@ public class Tela extends JFrame {
 		
 	}
 	
+	/*
+	 * Contrutor da classe
+	 */
 	public Tela(String titulo) throws HeadlessException {
 		
 		setLayout(new BorderLayout());
@@ -64,15 +70,21 @@ public class Tela extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(true);
 		
+		/*
+		 * Cria uma nova instancia do Grafo
+		 */
 		_grafo = new Grafo();
 		
 		getContentPane().add(getPainelInfo(), BorderLayout.NORTH);
-		getContentPane().add(getPainelDesenho(), BorderLayout.CENTER);
+		getContentPane().add(getPainelGrafo(), BorderLayout.CENTER);
 		getContentPane().add(getPainelInfoGrafo(), BorderLayout.WEST);
 		getContentPane().add(getPainelSaidaDoGrafo(), BorderLayout.EAST);
 		getContentPane().add(getPainelBotoes(), BorderLayout.SOUTH);
 	}
 	
+	/*
+	 * Cria painel para a saida do grafo
+	 */
 	private JPanel getPainelSaidaDoGrafo() {
 		if (_painelSaidaDoGrafo == null) {
 			_painelSaidaDoGrafo = new JPanel();
@@ -91,6 +103,10 @@ public class Tela extends JFrame {
 		return _painelSaidaDoGrafo;
 	}
 	
+	/*
+	 * Cria painel com as informações do grafo.
+	 * Se é para inserir um vertice ou aresta no grafo
+	 */
 	private JPanel getPainelInfoGrafo() {
 		if (_painelInfoGrafo == null) {
 			_painelInfoGrafo = new JPanel();
@@ -115,6 +131,11 @@ public class Tela extends JFrame {
 		return _painelInfoGrafo;
 	}
 	
+	/*
+	 * Cria painel de informação da aplicação.
+	 * Botão Novo Grafo -> Limpa a tela para ser gerado outro grafo
+	 * Opções de grafo 'Direcionado' ou 'Não direcionado'
+	 */
 	private JPanel getPainelInfo() {
 		if (_painelInfo == null) {
 			_painelInfo = new JPanel();
@@ -154,13 +175,24 @@ public class Tela extends JFrame {
 		return _painelInfo;
 	}
 	
-	private JPanel getPainelDesenho() {
+	/*
+	 * Cria painel onde o grafo é desenhado.
+	 */
+	private JPanel getPainelGrafo() {
 		if (_painelGrafo == null) {
 			_painelGrafo = new PainelGrafo(this, _grafo);
 		}
 		return _painelGrafo;
 	}
 	
+	/*
+	 * Cria painel dos botões.
+	 * Botões para gerar:
+	 * 			Lista de Adjacencia,
+	 * 			Matriz de Adjacencia,
+	 * 			Matriz de Incidencia,
+	 * 			Lista de Arestas
+	 */
 	private JPanel getPainelBotoes() {
 		if (_painelBotoes == null) {
 			_painelBotoes = new JPanel();
@@ -214,6 +246,10 @@ public class Tela extends JFrame {
 		return _painelBotoes;
 	}
 	
+	/*
+	 * Metodo que seleciona qual representação do grafo mostrar
+	 * no painel de saido do grafo.
+	 */
 	public void geraGrafoAPartirDo(Grafo grafo) {
 		if (grafo instanceof GrafoListaAdj) {
 			_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
@@ -236,6 +272,9 @@ public class Tela extends JFrame {
 		
 	}
 	
+	/*
+	 * Metodo para limpar a tela.
+	 */
 	public void limpaTela() {
 		_grafo = new Grafo();
 		((PainelGrafo) _painelGrafo).setGrafo(_grafo);
@@ -261,6 +300,10 @@ public class Tela extends JFrame {
 		return _radioAresta;
 	}
 
+	/*
+	 * Metodo inicial
+	 * Executa a aplicação.
+	 */
 	public static void main(String[] args) {
 		final Tela tela = new Tela("Trabalho representação de grafos");
 		tela.setVisible(true);

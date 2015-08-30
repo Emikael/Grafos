@@ -5,17 +5,28 @@ import java.util.List;
 import br.com.unisul.grafos.entity.Aresta;
 import br.com.unisul.grafos.entity.Vertice;
 
+/*
+ * Classe Grafo Matriz de Adjacencia.
+ */
 public class GrafoMatrizAdj extends Grafo {
 
 	List<Vertice> _vertices;
     List<Aresta> _arestas;
     int[][] _matriz;
-	
+
+    /*
+     * Construtor da Classe.
+     * Inicializa as listas de vertices e arestas.
+     */
     public GrafoMatrizAdj(Grafo grafo) {
     	_vertices = grafo._vertices;
         _arestas = grafo._arestas;
     }
     
+    /*
+     * Metodo que monta e exibi a representação do grafo
+     * no painel de saida.
+     */
     public String exibiGrafo() {
 		final StringBuilder grafo = new StringBuilder();
 		
@@ -41,6 +52,10 @@ public class GrafoMatrizAdj extends Grafo {
         return grafo.toString();
 	}
 	
+    /*
+     * Metodo que monta a cabelho da representação do grafo
+     * com o identificador de cada vertice.
+     */
 	private void montaCabecalhoGrafo(StringBuilder grafo) {
     	for (int i = 0; i < _vertices.size(); i++) {
     		if (i == 0) {
@@ -53,6 +68,9 @@ public class GrafoMatrizAdj extends Grafo {
     	grafo.append("\n");
     }
 	
+	/*
+	 * Metodo que gera uma matriz apartir da lista de arestas.
+	 */
 	private void gerarMatriz() {
 		int tamanhoMatriz = _vertices.size();
 
