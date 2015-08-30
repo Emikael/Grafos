@@ -94,19 +94,19 @@ public class Vertice {
 		return pontoDaCircunferencia;
 	}
 
-	public double get_posicaoX() {
+	public Double get_posicaoX() {
 		return _posicaoX;
 	}
 
-	public void set_posicaoX(double _posicaoX) {
+	public void set_posicaoX(Double _posicaoX) {
 		this._posicaoX = _posicaoX;
 	}
 
-	public double get_posicaoY() {
+	public Double get_posicaoY() {
 		return _posicaoY;
 	}
 
-	public void set_posicaoY(double _posicaoY) {
+	public void set_posicaoY(Double _posicaoY) {
 		this._posicaoY = _posicaoY;
 	}
 	

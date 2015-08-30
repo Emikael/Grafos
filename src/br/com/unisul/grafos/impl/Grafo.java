@@ -25,15 +25,19 @@ public class Grafo {
         return vertice;
     }
 	
-    public Aresta adicionarAresta(Vertice inicio, Vertice fim) {
+    public Aresta adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
         final Aresta aresta = new Aresta(inicio, fim);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
+        if (!direcionado) {
+			adicionarAresta(fim, inicio, true);
+		}
+        
         return aresta;
     }
     
-    public void adicionarAresta(Point2D ponto1, Point2D ponto2) {
+    public void adicionarAresta(Point2D ponto1, Point2D ponto2, boolean direcionado) {
     	final Vertice verticePonto1 = buscaVerticePelo(ponto1);
     	final Vertice verticePonto2 = buscaVerticePelo(ponto2);
     	
@@ -41,7 +45,7 @@ public class Grafo {
     		return;
     	}
     	
-    	adicionarAresta(verticePonto1, verticePonto2);
+    	adicionarAresta(verticePonto1, verticePonto2, direcionado);
     }
     
     private Vertice buscaVerticePelo(Point2D ponto) {
@@ -76,6 +80,10 @@ public class Grafo {
     
     private int getId() {
     	return _vertices.size() + 1;
+    }
+    
+    public List<Vertice> getVertices() {
+    	return _vertices;
     }
     
 }

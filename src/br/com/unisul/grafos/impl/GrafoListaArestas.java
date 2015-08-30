@@ -40,6 +40,8 @@ public class GrafoListaArestas extends Grafo {
     	grafo.append(arestasIniciais.toString());
     	grafo.append(arestasFinais.toString());
     	
+    	grafo.append("\n-------------------------------------------------------------------\n");
+    	
         return grafo.toString();
 	}
 

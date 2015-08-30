@@ -100,6 +100,8 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 	@Override
 	public void mousePressed(MouseEvent evento) {
 		if (evento.getButton() == MouseEvent.BUTTON1 && evento.getClickCount() == 1) {
+			boolean isArestaDirecionada = _tela.getRadioDirecionado().isSelected();
+			
 			if (_tela.getRadioVertice().isSelected()) {
 				_grafo.adicionarVertice(evento.getPoint());
 			
@@ -112,7 +114,7 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 					}
 				} else {
 					if (_grafo.isExisteVerticeNo(evento.getPoint())) {
-						_grafo.adicionarAresta(_ponto1, evento.getPoint());
+						_grafo.adicionarAresta(_ponto1, evento.getPoint(), isArestaDirecionada);
 						_situacao = EstadoDaAresta.NENHUM;
 					
 					} else {
@@ -137,8 +139,8 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 	public void mouseExited(MouseEvent e) {
 	}
 	
-	public void limpaPainel() {
-		this.removeAll();
+	public void setGrafo(Grafo grafo) {
+		_grafo = grafo;
 	}
-
+	
 }

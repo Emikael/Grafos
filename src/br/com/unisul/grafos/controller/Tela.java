@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -28,7 +29,7 @@ public class Tela extends JFrame {
 	private static final String GRAFOS = "### GRAFOS ###\n";
 	private static final long serialVersionUID = 1L;
 	private JPanel _painelInfo;
-	private JPanel _painelDesenho;
+	private JPanel _painelGrafo;
 	private JPanel _painelBotoes;
 	private JPanel _painelInfoGrafo;
 	private JPanel _painelSaidaDoGrafo;
@@ -80,7 +81,8 @@ public class Tela extends JFrame {
 			_painelSaidaDoGrafo.setLayout(new FlowLayout());
 			_painelSaidaDoGrafo.setSize(new Dimension(200, 150));
 			
-			_saidaDoGrafo = new JTextArea(GRAFOS, 100, 30);
+			_saidaDoGrafo = new JTextArea(GRAFOS, 45, 30);
+			_saidaDoGrafo.setEditable(false);
 			JScrollPane scrollPanel = new JScrollPane(_saidaDoGrafo);
 			
 			_painelSaidaDoGrafo.add(scrollPanel);
@@ -126,7 +128,12 @@ public class Tela extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					limpaTela();
+					int escolha = JOptionPane.showConfirmDialog(null,"Deseja criar um novo grafo? ","Novo Grafo",JOptionPane.YES_NO_CANCEL_OPTION); 
+					if (escolha == JOptionPane.YES_OPTION) {
+						limpaTela();
+						_radioDirecionado.setEnabled(true);
+						_radioNaoDirecionado.setEnabled(true);
+					}
 				}
 			});
 			
@@ -148,10 +155,10 @@ public class Tela extends JFrame {
 	}
 	
 	private JPanel getPainelDesenho() {
-		if (_painelDesenho == null) {
-			_painelDesenho = new PainelGrafo(this, _grafo);
+		if (_painelGrafo == null) {
+			_painelGrafo = new PainelGrafo(this, _grafo);
 		}
-		return _painelDesenho;
+		return _painelGrafo;
 	}
 	
 	private JPanel getPainelBotoes() {
@@ -224,12 +231,17 @@ public class Tela extends JFrame {
 			_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
 		}
 		
+		_radioDirecionado.setEnabled(false);
+		_radioNaoDirecionado.setEnabled(false);
+		
 	}
 	
 	public void limpaTela() {
 		_grafo = new Grafo();
-		_painelDesenho = new PainelGrafo(this, _grafo);
+		((PainelGrafo) _painelGrafo).setGrafo(_grafo);
+		_painelGrafo.repaint();
 		_radioVertice.setSelected(true);
+		_radioDirecionado.setSelected(true);
 		_saidaDoGrafo.setText(GRAFOS);
 	}
 	

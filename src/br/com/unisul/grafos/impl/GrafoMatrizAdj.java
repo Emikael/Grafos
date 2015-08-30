@@ -53,7 +53,7 @@ public class GrafoMatrizAdj extends Grafo {
     	grafo.append("\n");
     }
 	
-	public void gerarMatriz() {
+	private void gerarMatriz() {
 		int tamanhoMatriz = _vertices.size();
 
 		_matriz = new int[tamanhoMatriz][tamanhoMatriz];

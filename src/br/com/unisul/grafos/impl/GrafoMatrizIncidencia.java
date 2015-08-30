@@ -24,16 +24,16 @@ public class GrafoMatrizIncidencia extends Grafo {
     		grafo.append(vertice.getId());
     		for (Aresta aresta : _arestas) {
 				if (vertice.getId() == aresta.getInicio().getId()) {
-					grafo.append("|  1  |");
+					grafo.append("|    1   |");
 					continue;
 				}
 				
 				if (vertice.getId() == aresta.getFim().getId()) {
-					grafo.append("| -1  |");
+					grafo.append("|   -1   |");
 					continue;
 				}
 				
-				grafo.append("|  0  |");
+				grafo.append("|    0   |");
 			}
     		
     		grafo.append("\n");
@@ -47,14 +47,16 @@ public class GrafoMatrizIncidencia extends Grafo {
     private void montaCabecalhoGrafo(StringBuilder grafo) {
     	for (int i = 1; i <= _arestas.size(); i++) {
     		if (i == 1) {
-    			grafo.append(" | ");
+    			grafo.append("  |   ");
+    		} else  if (i <= 9){
+    			grafo.append("|   ");
     		} else {
     			grafo.append("| ");
     		}
     		grafo.append("E").append(i);
     		
     		if (i > 9) {
-    			grafo.append(" |");
+    			grafo.append("  |");
     		} else {
     			grafo.append("  |");
     		}
