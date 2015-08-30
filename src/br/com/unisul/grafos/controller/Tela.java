@@ -149,7 +149,7 @@ public class Tela extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int escolha = JOptionPane.showConfirmDialog(null,"Deseja criar um novo grafo? ","Novo Grafo",JOptionPane.YES_NO_CANCEL_OPTION); 
+					int escolha = JOptionPane.showConfirmDialog(null,"Deseja criar um novo grafo? ","Novo Grafo",JOptionPane.YES_NO_OPTION); 
 					if (escolha == JOptionPane.YES_OPTION) {
 						limpaTela();
 						_radioDirecionado.setEnabled(true);
