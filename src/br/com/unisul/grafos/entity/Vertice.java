@@ -72,7 +72,7 @@ public class Vertice {
 	}
 	
     /*
-     * Metodo que desenho o nome do vertice no centro do vertice.
+     * Metodo que desenha o nome do vertice no centro do vertice.
      */
 	public void desenharNome(Graphics2D graphics2D) {
 		final FontMetrics metrics = graphics2D.getFontMetrics();
