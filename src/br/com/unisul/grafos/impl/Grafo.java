@@ -59,7 +59,7 @@ public class Grafo {
     }
     
     /*
-     * Metodo que uma aresta apartir de posições selecionadas na tela
+     * Metodo que adiciona uma aresta apartir de posições selecionadas na tela
      * Para cada posição passada como parametro
      * irá busca o vertice daquela posição.
      */
