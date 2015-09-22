@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import br.com.unisul.grafos.impl.GrafoDeConexidade;
 import br.com.unisul.grafos.impl.Grafo;
 import br.com.unisul.grafos.impl.GrafoListaAdj;
 import br.com.unisul.grafos.impl.GrafoListaArestas;
@@ -47,6 +48,7 @@ public class Tela extends JFrame {
 	private JButton _botaoMatrizIncidencia;
 	private JButton _botaoListaArestas;
 	private JButton _botaoNovoGrafo;
+	private JButton _botaoConexidade;
 	
 	private JTextArea _saidaDoGrafo;
 	
@@ -237,10 +239,20 @@ public class Tela extends JFrame {
 				}
 			});
 			
+			_botaoConexidade = new JButton("Gerar Grafo de Conexidade");
+			_botaoConexidade.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					geraGrafoAPartirDo(new GrafoDeConexidade(_grafo));
+				}
+			});
+			
 			_painelBotoes.add(_botaoListaAdj);
 			_painelBotoes.add(_botaoMatrizAdj);
 			_painelBotoes.add(_botaoMatrizIncidencia);
 			_painelBotoes.add(_botaoListaArestas);
+			_painelBotoes.add(_botaoConexidade);
 		
 		}
 		return _painelBotoes;
@@ -251,25 +263,39 @@ public class Tela extends JFrame {
 	 * no painel de saido do grafo.
 	 */
 	public void geraGrafoAPartirDo(Grafo grafo) {
-		if (grafo instanceof GrafoListaAdj) {
-			_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
+		try {
+			_saidaDoGrafo.append("Grafo Direcionado: " + _radioDirecionado.isSelected() + "\n");
+			
+			if (grafo instanceof GrafoListaAdj) {
+				_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoMatrizAdj) {
+				_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoMatrizIncidencia) {
+				_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoListaArestas) {
+				_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoDeConexidade) {
+				if (_radioDirecionado.isSelected()) {
+					JOptionPane.showMessageDialog(this, "Esse grafo só pode ser rodado de forma não direcionada!");
+					return;
+				}
+				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
+			}
+			
+			_radioDirecionado.setEnabled(false);
+			_radioNaoDirecionado.setEnabled(false);
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());
 		}
-		
-		if (grafo instanceof GrafoMatrizAdj) {
-			_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
-		}
-		
-		if (grafo instanceof GrafoMatrizIncidencia) {
-			_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
-		}
-		
-		if (grafo instanceof GrafoListaArestas) {
-			_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
-		}
-		
-		_radioDirecionado.setEnabled(false);
-		_radioNaoDirecionado.setEnabled(false);
-		
 	}
 	
 	/*

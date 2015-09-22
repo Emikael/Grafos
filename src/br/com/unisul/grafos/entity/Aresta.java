@@ -16,6 +16,7 @@ public class Aresta {
 	private Vertice _inicio;
     private Vertice _fim;
     private Line2D _desenhoAresta;
+    private Integer _peso;
     
     /*
      * Constante com um angulo padrão de cada vertice
@@ -27,9 +28,10 @@ public class Aresta {
      * Recebe um vertice inicial e um final para criação da aresta.
      * Calcula o angulo de cada vertice para o desenho da aresta.
      */
-    public Aresta(Vertice inicio, Vertice fim) {
+    public Aresta(Vertice inicio, Vertice fim, Integer peso) {
         this._inicio = inicio;
         this._fim = fim;
+        this._peso = peso;
         
         double anguloInicio = anguloDosVertice(inicio.getCentroVertice(), fim.getCentroVertice()) - ANGULO;
         double anguloFim = anguloDosVertice(fim.getCentroVertice(), inicio.getCentroVertice()) - ANGULO;
@@ -65,6 +67,14 @@ public class Aresta {
 		final double posicaoY = (double) (fim.getY() - inicio.getY());
 		
 		return Math.atan2(posicaoY, posicaoX);
+	}
+
+	public Integer getPeso() {
+		return _peso;
+	}
+
+	public void setPeso(Integer peso) {
+		this._peso = peso;
 	}
 
 }

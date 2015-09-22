@@ -122,6 +122,8 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 				
 			} else if (_tela.getRadioAresta().isSelected()){
 				adicionarAresta(evento, isArestaDirecionada);
+				_tela.getRadioDirecionado().setEnabled(false);
+				_tela.getRadioNaoDirecionado().setEnabled(false);
 			}
 		}
 		

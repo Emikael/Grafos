@@ -9,3 +9,5 @@ Trabalho da materia Grafos sobre implementação de grafos dos tipos:
  -Matriz de incidência  
  
  -Listas de arestas
+ 
+ -Matriz de Conexidade

@@ -22,6 +22,9 @@ public class Vertice {
 	private double _posicaoY;
 	private Shape _desenhoVertice;
 	private Point2D _centroVertice;
+	private Integer distancia;
+	private boolean visitado = false;
+	private Vertice pai;
     
     public Vertice() {
     	super();
@@ -122,5 +125,29 @@ public class Vertice {
 	public Point2D getCentroVertice() {
 		return _centroVertice;
 	}
-    
+
+	public Integer getDistancia() {
+		return distancia;
+	}
+
+	public void setDistancia(Integer distancia) {
+		this.distancia = distancia;
+	}
+	
+	public void setVisitar(boolean visitar) {
+		this.visitado = visitar;
+	}
+	
+	public boolean isVisitado() {
+		return this.visitado;
+	}
+	
+	public Vertice getPai() {
+		return pai;
+	}
+
+	public void setPai(Vertice pai) {
+		this.pai = pai;
+	}
+	
 }

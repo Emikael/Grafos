@@ -40,7 +40,7 @@ public class Grafo {
      * Metodo que adiciona uma arestas no grafo.
      */
     public Aresta adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
-        final Aresta aresta = new Aresta(inicio, fim);
+        final Aresta aresta = new Aresta(inicio, fim, 1);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
@@ -124,6 +124,10 @@ public class Grafo {
     
     public List<Vertice> getVertices() {
     	return _vertices;
+    }
+    
+    public List<Aresta> getArestas() {
+    	return _arestas;
     }
     
 }
