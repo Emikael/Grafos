@@ -295,6 +295,7 @@ public class Tela extends JFrame {
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());
+			e.printStackTrace(); 
 		}
 	}
 	

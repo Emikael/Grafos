@@ -29,18 +29,16 @@ public class Grafo {
     /*
      * Metodo que adiciona um vertice no grafo.
      */
-    public Vertice adicionarVertice(Point2D ponto) {
+    public void adicionarVertice(Point2D ponto) {
         final Vertice vertice = new Vertice(getId(), ponto.getX(), ponto.getY());
         _vertices.add(vertice);
-        
-        return vertice;
     }
 	
     /*
      * Metodo que adiciona uma arestas no grafo.
      */
-    public Aresta adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
-        final Aresta aresta = new Aresta(inicio, fim, 1);
+    public void adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
+    	final Aresta aresta = new Aresta(inicio, fim, 0);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
@@ -54,8 +52,6 @@ public class Grafo {
         if (!direcionado) {
 			adicionarAresta(fim, inicio, true);
 		}
-        
-        return aresta;
     }
     
     /*

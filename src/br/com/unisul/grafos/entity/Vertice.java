@@ -14,7 +14,7 @@ import java.util.List;
  * Classe Vertice.
  * Controla todas as ações dos vertices.
  */
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
 
 	private int _id;
     private List<Aresta> _adjacente;
@@ -22,9 +22,9 @@ public class Vertice {
 	private double _posicaoY;
 	private Shape _desenhoVertice;
 	private Point2D _centroVertice;
-	private Integer distancia;
-	private boolean visitado = false;
-	private Vertice pai;
+	private Integer _distancia;
+	private boolean _visitado = false;
+	private Vertice _pai;
     
     public Vertice() {
     	super();
@@ -127,27 +127,44 @@ public class Vertice {
 	}
 
 	public Integer getDistancia() {
-		return distancia;
+		return _distancia;
 	}
 
 	public void setDistancia(Integer distancia) {
-		this.distancia = distancia;
+		this._distancia = distancia;
 	}
 	
 	public void setVisitar(boolean visitar) {
-		this.visitado = visitar;
+		this._visitado = visitar;
 	}
 	
 	public boolean isVisitado() {
-		return this.visitado;
+		return this._visitado;
 	}
 	
 	public Vertice getPai() {
-		return pai;
+		return _pai;
 	}
 
 	public void setPai(Vertice pai) {
-		this.pai = pai;
+		this._pai = pai;
 	}
+	
+	@Override
+	public int compareTo(Vertice vertice) {
+		return this.getDistancia().compareTo(vertice.getDistancia());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Vertice) {
+			Vertice vertice = (Vertice) obj;
+			if(this.getId() == vertice.getId()){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	
 }
