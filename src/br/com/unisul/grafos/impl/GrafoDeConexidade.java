@@ -143,7 +143,7 @@ public class GrafoDeConexidade extends Grafo {
 		}
 		
 		zeraVertices();
-		return encontrarMenorCaminhoParaO(0, verticeInicial, verticeFinal, true);
+		return encontrarMenorCaminhoParaO(verticeInicial, verticeFinal);
 	}
 	
 	private void zeraVertices() {
@@ -153,7 +153,7 @@ public class GrafoDeConexidade extends Grafo {
 		}
 	}
 
-	public int encontrarMenorCaminhoParaO(int grauinicial, Vertice verticeInicio, Vertice verticeFim, boolean verificacaoInicial) {
+	public int encontrarMenorCaminhoParaO(Vertice verticeInicio, Vertice verticeFim) {
 		List<Vertice> verticesVisitados = new ArrayList<Vertice>();
 		List<Vertice> menorCaminho = new ArrayList<Vertice>();
 		
