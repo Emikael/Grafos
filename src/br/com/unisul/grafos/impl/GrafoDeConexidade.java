@@ -76,7 +76,7 @@ public class GrafoDeConexidade extends Grafo {
 	}
 	
 	private int buscaMenorCentro() {
-		int menorCentro = 99999;
+		int menorCentro = _vertices.size();
 		int centro;
 		
 		for (int i = 0; i < _matriz.length; i++) {
