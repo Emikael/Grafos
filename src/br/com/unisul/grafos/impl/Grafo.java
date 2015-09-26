@@ -38,7 +38,7 @@ public class Grafo {
      * Metodo que adiciona uma arestas no grafo.
      */
     public void adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
-    	final Aresta aresta = new Aresta(inicio, fim, 0);
+    	final Aresta aresta = new Aresta(inicio, fim, 1);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
@@ -55,7 +55,7 @@ public class Grafo {
     }
     
     /*
-     * Metodo que adiciona uma aresta apartir de posições selecionadas na tela
+     * Metodo que adiciona uma aresta apartir de posições selecionadas na telayj
      * Para cada posição passada como parametro
      * irá busca o vertice daquela posição.
      */

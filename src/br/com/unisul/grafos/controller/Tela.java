@@ -164,7 +164,9 @@ public class Tela extends JFrame {
 			
 			_radioDirecionado = new JRadioButton("Direcionado");
 			_radioNaoDirecionado = new JRadioButton("Não direcionado");
-			_radioDirecionado.setSelected(true);
+			_radioNaoDirecionado.setSelected(true);
+			_radioDirecionado.setEnabled(false);
+			_radioNaoDirecionado.setEnabled(false);
 			
 			final ButtonGroup grupoRadio = new ButtonGroup();
 			grupoRadio.add(_radioDirecionado);

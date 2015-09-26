@@ -141,10 +141,9 @@ public class GrafoDeConexidade extends Grafo {
 		if (verticeInicial.getId() == verticeFinal.getId()) {
 			return 0;
 		}
-
+		
 		zeraVertices();
-		List<Vertice> menorCaminho = encontrarMenorCaminhoParaO(verticeInicial, verticeFinal);
-		return menorCaminho.size() - 1;
+		return encontrarMenorCaminhoParaO(0, verticeInicial, verticeFinal, true);
 	}
 	
 	private void zeraVertices() {
@@ -154,7 +153,7 @@ public class GrafoDeConexidade extends Grafo {
 		}
 	}
 
-	public List<Vertice> encontrarMenorCaminhoParaO(Vertice verticeInicio, Vertice verticeFim) {
+	public int encontrarMenorCaminhoParaO(int grauinicial, Vertice verticeInicio, Vertice verticeFim, boolean verificacaoInicial) {
 		List<Vertice> verticesVisitados = new ArrayList<Vertice>();
 		List<Vertice> menorCaminho = new ArrayList<Vertice>();
 		
@@ -164,7 +163,7 @@ public class GrafoDeConexidade extends Grafo {
 		menorCaminho.add(verticeAtual);
 
 		setaDistanciasDosVertices(verticeAtual);
-
+		
 		while (verticesNaoVisitados != 0) {
 
 			verticeAtual = verticesVisitados.get(0);
@@ -174,16 +173,19 @@ public class GrafoDeConexidade extends Grafo {
 				
 				if (verticeVizinho.isVisitado()) { continue; }
 				
-				verticeVizinho.setPai(verticeAtual);
+				if (verticeVizinho.getPai() == null) {
+					verticeVizinho.setPai(verticeAtual);
+				}
+				
 				if (verticeVizinho.getDistancia() > (verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso())) {
 
-					verticeVizinho.setDistancia(verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso());
+					verticeVizinho.setDistancia(verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso() * 2);
 
 					if (verticeVizinho == verticeFim) {
 						menorCaminho.clear();
 						Vertice verticeDoCaminho = verticeVizinho;
 						menorCaminho.add(verticeVizinho);
-						while (verticeDoCaminho.getPai() != null) {
+						while (!verticeInicio.equals(verticeDoCaminho.getPai())) {
 							menorCaminho.add(verticeDoCaminho.getPai());
 							verticeDoCaminho = verticeDoCaminho.getPai();
 						}
@@ -201,8 +203,8 @@ public class GrafoDeConexidade extends Grafo {
 			
 			Collections.sort(verticesVisitados);
 		}
-
-		return menorCaminho;
+		
+		return menorCaminho.size();
 	}
 
 	private void setaDistanciasDosVertices(Vertice verticeAtual) {
