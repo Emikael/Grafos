@@ -16,13 +16,15 @@ import java.util.List;
  */
 public class Vertice implements Comparable<Vertice> {
 
+	public static Double LARGURA = 40D;
+	
 	private int _id;
     private List<Aresta> _adjacente;
     private double _posicaoX;
 	private double _posicaoY;
 	private Shape _desenhoVertice;
 	private Point2D _centroVertice;
-	private Integer _distancia;
+	private Double _distancia;
 	private boolean _visitado = false;
 	private Vertice _pai;
     
@@ -40,9 +42,9 @@ public class Vertice implements Comparable<Vertice> {
         this._adjacente = new ArrayList<Aresta>();
         this._posicaoX = posicaoX;
         this._posicaoY = posicaoY;
-        this._desenhoVertice = new Ellipse2D.Double(_posicaoX, _posicaoY, 40, 40);
+        this._desenhoVertice = new Ellipse2D.Double(_posicaoX, _posicaoY, LARGURA, LARGURA);
         this._centroVertice = new Point2D.Double();
-		this._centroVertice.setLocation(_posicaoX + (40 / 2), _posicaoY + (40 / 2));
+		this._centroVertice.setLocation(_posicaoX + (LARGURA / 2), _posicaoY + (LARGURA / 2));
     }
     
     /*
@@ -92,19 +94,6 @@ public class Vertice implements Comparable<Vertice> {
 	public boolean isExisteVerticeNo(Point2D ponto) {
 		return _desenhoVertice.contains(ponto);
 	}
-	
-	/*
-	 * Metodo que calcula a posição da circunferencia do vertice.
-	 */
-	public Point2D getPontoDaCircunferenciaDoVertice(double angulo) {
-		final Point2D pontoDaCircunferencia = new Point2D.Double(_centroVertice.getX(), _centroVertice.getY());
-		
-		final double posicaoX = Math.cos(angulo) * (40 / 2);
-		final double posicaoY = Math.sin(angulo) * (40 / 2); 
-		pontoDaCircunferencia.setLocation(pontoDaCircunferencia.getX() + posicaoX, pontoDaCircunferencia.getY() + posicaoY);
-		
-		return pontoDaCircunferencia;
-	}
 
 	public Double get_posicaoX() {
 		return _posicaoX;
@@ -126,11 +115,11 @@ public class Vertice implements Comparable<Vertice> {
 		return _centroVertice;
 	}
 
-	public Integer getDistancia() {
+	public Double getDistancia() {
 		return _distancia;
 	}
 
-	public void setDistancia(Integer distancia) {
+	public void setDistancia(Double distancia) {
 		this._distancia = distancia;
 	}
 	
@@ -150,6 +139,10 @@ public class Vertice implements Comparable<Vertice> {
 		this._pai = pai;
 	}
 	
+	public Point2D getPonto() {
+		return new Point2D.Double(get_posicaoX(), get_posicaoY());
+	}
+	
 	@Override
 	public int compareTo(Vertice vertice) {
 		return this.getDistancia().compareTo(vertice.getDistancia());
@@ -165,6 +158,5 @@ public class Vertice implements Comparable<Vertice> {
 		}
 		return false;
 	}
-
 	
 }

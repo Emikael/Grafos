@@ -7,15 +7,26 @@ import java.util.List;
 import br.com.unisul.grafos.entity.Aresta;
 import br.com.unisul.grafos.entity.Vertice;
 
+/*
+ * Classe do Grafo de Matriz de conexidade.
+ */
 public class GrafoDeConexidade extends Grafo {
 
 	private List<Vertice> _vertices;
 	private int[][] _matriz;
 
+	/*
+	 * Construtor da classe.
+	 * Inicializa as listas de vertices.
+	 */
 	public GrafoDeConexidade(Grafo grafo) {
 		this._vertices = grafo.getVertices();
 	}
 
+	/*
+	 * Metodo que monta e exibi a representação do grafo
+	 * no painel de saida.
+	 */
 	public String exibiGrafo() {
 		if (!isGrafoConexo()) {
 			return "Grafo não é conexo!\n";
@@ -49,6 +60,9 @@ public class GrafoDeConexidade extends Grafo {
 		return grafo.toString();
 	}
 	
+	/*
+	 * Método que faz a busca dos centros do grafo a partir da matriz gerada.
+	 */
 	private void buscaOsCentrosDoGrafo(StringBuilder grafo) {
 		int menorCentro = buscaMenorCentro();
 		int centro;
@@ -70,11 +84,14 @@ public class GrafoDeConexidade extends Grafo {
 			centros.delete(centros.length() - 2, centros.length());
 		}
 		
-		grafo.append("r(G) = " + menorCentro).append("\n");
+		grafo.append("r(G) = ").append(menorCentro).append("\n");
 		grafo.append(centros).append("}\n");
 		
 	}
 	
+	/*
+	 * Método que retorna o menor centro da matriz gerada.
+	 */
 	private int buscaMenorCentro() {
 		int menorCentro = _vertices.size();
 		int centro;
@@ -94,6 +111,9 @@ public class GrafoDeConexidade extends Grafo {
 		return menorCentro;
 	}
 
+	/*
+	 * Método que verifica se o grafo é conexo.
+	 */
 	private boolean isGrafoConexo() {
 		for (Vertice vertice : _vertices) {
 			if (vertice.getListaAdjacentes().isEmpty() && !isVerticeTemConexao(vertice)) {
@@ -104,6 +124,9 @@ public class GrafoDeConexidade extends Grafo {
 		return true;
 	}
 
+	/*
+	 * Método que verifica se o vertice tem conexão com algum outro vertice.
+	 */
 	private boolean isVerticeTemConexao(Vertice vertice) {
 		for (Vertice verticeInicio : _vertices) {
 			for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
@@ -115,21 +138,24 @@ public class GrafoDeConexidade extends Grafo {
 		return false;
 	}
 
+	/*
+	 * Método que gera a matriz de conexidade do grafo.
+	 */
 	private void gerarMatriz() {
 		int tamanhoMatriz = _vertices.size();
 		int maiorCentro = 0;
-		int grau = 0;
+		int grauDeConexidade = 0;
 
 		_matriz = new int[tamanhoMatriz][tamanhoMatriz + 1];
 
 		for (Vertice verticeInicio : _vertices) {
 			maiorCentro = 0;
 			for (Vertice verticeFim : _vertices) {
-				grau = getGrauDeConexidadeEntreOsVertices(verticeInicio, verticeFim);
-				_matriz[verticeInicio.getId() - 1][verticeFim.getId() - 1] = grau;
+				grauDeConexidade = getGrauDeConexidadeEntreOsVertices(verticeInicio, verticeFim);
+				_matriz[verticeInicio.getId() - 1][verticeFim.getId() - 1] = grauDeConexidade;
 				
-				if (grau > maiorCentro) {
-					maiorCentro = grau;
+				if (grauDeConexidade > maiorCentro) {
+					maiorCentro = grauDeConexidade;
 				}
 			}
 			
@@ -137,6 +163,9 @@ public class GrafoDeConexidade extends Grafo {
 		}
 	}
 
+	/*
+	 * Método que retorna o grau de conexidade entre os vertices.
+	 */
 	private int getGrauDeConexidadeEntreOsVertices(Vertice verticeInicial, Vertice verticeFinal) {
 		if (verticeInicial.getId() == verticeFinal.getId()) {
 			return 0;
@@ -146,6 +175,10 @@ public class GrafoDeConexidade extends Grafo {
 		return encontrarMenorCaminhoParaO(verticeInicial, verticeFinal);
 	}
 	
+	/*
+	 * Método que retira as visitas e os pais dos vertices
+	 * para que possa ser rodade novamente o método "encontrarMenorCaminhoParaO(verticeInicio, verticeFim)"
+	 */
 	private void zeraVertices() {
 		for (Vertice vertice : _vertices) {
 			vertice.setVisitar(false);
@@ -153,7 +186,11 @@ public class GrafoDeConexidade extends Grafo {
 		}
 	}
 
-	public int encontrarMenorCaminhoParaO(Vertice verticeInicio, Vertice verticeFim) {
+	/*
+	 * Método que retorna o menor caminho entre o verticeInicio e o verticeFim.
+	 * Método baseado no Algoritmo de Dijkstra para encontrar o menor caminho entre dois vertices.
+	 */
+	private int encontrarMenorCaminhoParaO(Vertice verticeInicio, Vertice verticeFim) {
 		List<Vertice> verticesVisitados = new ArrayList<Vertice>();
 		List<Vertice> menorCaminho = new ArrayList<Vertice>();
 		
@@ -207,16 +244,23 @@ public class GrafoDeConexidade extends Grafo {
 		return menorCaminho.size();
 	}
 
+	/*
+	 * Método que seta as distancias iniciais dos vertices
+	 */
 	private void setaDistanciasDosVertices(Vertice verticeAtual) {
 		for (Vertice vertice : _vertices) {
 			if (vertice.getId() == verticeAtual.getId()) {
-				vertice.setDistancia(0);
+				vertice.setDistancia(0D);
 			} else {
-				vertice.setDistancia(9999);
+				vertice.setDistancia(Double.POSITIVE_INFINITY);
 			}
 		}
 	}
 	
+	/*
+	 * Método que monta o cabeçalho para apresentação da matriz do grafo
+	 * na tela principal.
+	 */
 	private void montaCabecalhoGrafo(StringBuilder grafo) {
     	for (int i = 0; i <= _vertices.size(); i++) {
     		if (i == 0) {

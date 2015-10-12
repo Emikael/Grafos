@@ -15,6 +15,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import br.com.unisul.grafos.impl.Grafo;
@@ -63,10 +64,10 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 	 * Metodo que desenha o grafo na tela.
 	 */
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	protected void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
 		
-		Graphics2D graphics2D = (Graphics2D) g.create();
+		Graphics2D graphics2D = (Graphics2D) graphics.create();
 
 		AffineTransform sat = graphics2D.getTransform();
         
@@ -116,14 +117,17 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 	public void mousePressed(MouseEvent evento) {
 		if (evento.getButton() == MouseEvent.BUTTON1 && evento.getClickCount() == 1) {
 			boolean isArestaDirecionada = _tela.getRadioDirecionado().isSelected();
+			boolean isArestaValorada = _tela.getRadioValorado().isSelected();
 			
 			if (_tela.getRadioVertice().isSelected()) {
 				_grafo.adicionarVertice(evento.getPoint());
 				
 			} else if (_tela.getRadioAresta().isSelected()){
-				adicionarAresta(evento, isArestaDirecionada);
+				adicionarAresta(evento, isArestaDirecionada, isArestaValorada);
 				_tela.getRadioDirecionado().setEnabled(false);
 				_tela.getRadioNaoDirecionado().setEnabled(false);
+				_tela.getRadioValorado().setEnabled(false);
+				_tela.getRadioNaoValorado().setEnabled(false);
 			}
 		}
 		
@@ -137,7 +141,7 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 	 * Metodo que verifica se um vertice já está selecionado e adiciona uma aresta
 	 * ligando dois vertices na tela.
 	 */
-	private void adicionarAresta(MouseEvent evento, boolean isArestaDirecionada) {
+	private void adicionarAresta(MouseEvent evento, boolean isArestaDirecionada, boolean isArestaValorada) {
 		if (_situacao.equals(EstadoDaAresta.NENHUM)) {
 			if (_grafo.isExisteVerticeNo(evento.getPoint())) {
 				_ponto1 = new Point2D.Double(evento.getX(), evento.getY());
@@ -145,7 +149,25 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 			}
 		} else {
 			if (_grafo.isExisteVerticeNo(evento.getPoint())) {
-				_grafo.adicionarAresta(_ponto1, evento.getPoint(), isArestaDirecionada);
+				Double peso = 1D;
+				
+				if (_tela.getRadioValorado().isSelected()) {
+					try {
+						peso = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite o peso da aresta."));
+						
+						if (peso.compareTo(0D) == 0) {
+							throw new Exception("Preencha um valor!");
+						}
+						
+					} catch (Exception e) {
+						System.out.println("Erro de conversão" + e.getMessage());
+						JOptionPane.showMessageDialog(this, "Erro de conversão de valor digite um valor valído");
+						_situacao = EstadoDaAresta.NENHUM;
+						return;
+					}
+				}
+				
+				_grafo.adicionarAresta(_ponto1, evento.getPoint(), isArestaDirecionada, peso, isArestaValorada);
 				_situacao = EstadoDaAresta.NENHUM;
 			
 			} else {

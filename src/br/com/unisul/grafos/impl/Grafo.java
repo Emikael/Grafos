@@ -37,8 +37,8 @@ public class Grafo {
     /*
      * Metodo que adiciona uma arestas no grafo.
      */
-    public void adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado) {
-    	final Aresta aresta = new Aresta(inicio, fim, 1);
+    public void adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado, Double peso, boolean valorado) {
+    	final Aresta aresta = new Aresta(inicio, fim, direcionado, peso, valorado);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
@@ -50,16 +50,33 @@ public class Grafo {
          * Final -> Inicial
          */
         if (!direcionado) {
-			adicionarAresta(fim, inicio, true);
+			adicionarAresta(fim, inicio, true, peso, valorado);
+		} else {
+			Aresta arestaAdjcente = existeArestaComOsVerticfes(fim, inicio);
+			
+			if (arestaAdjcente != null) {
+				aresta.setCurvatura(1);
+				arestaAdjcente.setCurvatura(1);
+			}
 		}
     }
     
-    /*
+    private Aresta existeArestaComOsVerticfes(Vertice fim, Vertice inicio) {
+    	for (Aresta aresta : _arestas) {
+			if (aresta.getInicio().getId() == fim.getId() && aresta.getFim().getId() == inicio.getId()) {
+				return aresta;
+			}
+		}
+    	
+    	return null;
+	}
+
+	/*
      * Metodo que adiciona uma aresta apartir de posições selecionadas na telayj
      * Para cada posição passada como parametro
      * irá busca o vertice daquela posição.
      */
-    public void adicionarAresta(Point2D ponto1, Point2D ponto2, boolean direcionado) {
+    public void adicionarAresta(Point2D ponto1, Point2D ponto2, boolean direcionado, Double peso, boolean valorado) {
     	final Vertice verticePonto1 = buscaVerticePelo(ponto1);
     	final Vertice verticePonto2 = buscaVerticePelo(ponto2);
     	
@@ -67,7 +84,7 @@ public class Grafo {
     		return;
     	}
     	
-    	adicionarAresta(verticePonto1, verticePonto2, direcionado);
+    	adicionarAresta(verticePonto1, verticePonto2, direcionado, peso, valorado);
     }
     
     /*
@@ -93,7 +110,7 @@ public class Grafo {
 		}
 
     	for (Aresta aresta : _arestas) {
-    		aresta.desenharAresta(graphics2D);
+    		aresta.desenhaAresta(graphics2D);
     	}
     }
     

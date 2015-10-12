@@ -10,15 +10,18 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
-import br.com.unisul.grafos.impl.GrafoDeConexidade;
 import br.com.unisul.grafos.impl.Grafo;
+import br.com.unisul.grafos.impl.GrafoDeConexidade;
 import br.com.unisul.grafos.impl.GrafoListaAdj;
 import br.com.unisul.grafos.impl.GrafoListaArestas;
 import br.com.unisul.grafos.impl.GrafoMatrizAdj;
@@ -42,6 +45,8 @@ public class Tela extends JFrame {
 	private JRadioButton _radioNaoDirecionado;
 	private JRadioButton _radioVertice;
 	private JRadioButton _radioAresta;
+	private JRadioButton _radioValorado;
+	private JRadioButton _radioNaoValorado;
 	
 	private JButton _botaoListaAdj;
 	private JButton _botaoMatrizAdj;
@@ -156,6 +161,8 @@ public class Tela extends JFrame {
 						limpaTela();
 						_radioDirecionado.setEnabled(true);
 						_radioNaoDirecionado.setEnabled(true);
+						_radioValorado.setEnabled(true);
+						_radioNaoValorado.setEnabled(true);
 					}
 				}
 			});
@@ -164,20 +171,38 @@ public class Tela extends JFrame {
 			
 			_radioDirecionado = new JRadioButton("Direcionado");
 			_radioNaoDirecionado = new JRadioButton("Não direcionado");
-			_radioNaoDirecionado.setSelected(true);
-			_radioDirecionado.setEnabled(false);
-			_radioNaoDirecionado.setEnabled(false);
+			_radioDirecionado.setSelected(true);
 			
-			final ButtonGroup grupoRadio = new ButtonGroup();
-			grupoRadio.add(_radioDirecionado);
-			grupoRadio.add(_radioNaoDirecionado);
+			_radioValorado = new JRadioButton("Valorado");
+			_radioNaoValorado = new JRadioButton("Não Valorado");
+			_radioValorado.setSelected(true);
+			
+			final ButtonGroup grupoRadioDirecao = new ButtonGroup();
+			grupoRadioDirecao.add(_radioDirecionado);
+			grupoRadioDirecao.add(_radioNaoDirecionado);
+
+			final ButtonGroup grupoRadioValorado = new ButtonGroup();
+			grupoRadioValorado.add(_radioValorado);
+			grupoRadioValorado.add(_radioNaoValorado);
 			
 			_painelInfo.add(_radioDirecionado);
 			_painelInfo.add(_radioNaoDirecionado);
 			
+			_painelInfo.add(criaSeparadorVertical());
+
+			_painelInfo.add(_radioValorado);
+			_painelInfo.add(_radioNaoValorado);
+
+			
 		}
 		return _painelInfo;
 	}
+	
+	private JComponent criaSeparadorVertical() {
+        JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
+        separador.setPreferredSize(new Dimension(3,25));
+        return separador;
+    }
 	
 	/*
 	 * Cria painel onde o grafo é desenhado.
@@ -285,15 +310,13 @@ public class Tela extends JFrame {
 			}
 			
 			if (grafo instanceof GrafoDeConexidade) {
-				if (_radioDirecionado.isSelected()) {
-					JOptionPane.showMessageDialog(this, "Esse grafo só pode ser rodado de forma não direcionada!");
-					return;
-				}
 				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
 			}
 			
 			_radioDirecionado.setEnabled(false);
 			_radioNaoDirecionado.setEnabled(false);
+			_radioValorado.setEnabled(false);
+			_radioNaoValorado.setEnabled(false);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());
@@ -311,6 +334,7 @@ public class Tela extends JFrame {
 		_radioVertice.setSelected(true);
 		_radioDirecionado.setSelected(true);
 		_saidaDoGrafo.setText(GRAFOS);
+		_radioValorado.setSelected(true);
 	}
 	
 	public JRadioButton getRadioDirecionado() {
@@ -329,13 +353,29 @@ public class Tela extends JFrame {
 		return _radioAresta;
 	}
 
+	public JRadioButton getRadioValorado() {
+		return _radioValorado;
+	}
+
+	public void setRadioValorado(JRadioButton _radioValorado) {
+		this._radioValorado = _radioValorado;
+	}
+
+	public JRadioButton getRadioNaoValorado() {
+		return _radioNaoValorado;
+	}
+
+	public void setRadioNaoValorado(JRadioButton _radioNaoValorado) {
+		this._radioNaoValorado = _radioNaoValorado;
+	}
+	
 	/*
 	 * Metodo inicial
 	 * Executa a aplicação.
 	 */
 	public static void main(String[] args) {
-		final Tela tela = new Tela("Trabalho representação de grafos");
+		final Tela tela = new Tela("Trabalho Grafos");
 		tela.setVisible(true);
 	}
-	
+
 }

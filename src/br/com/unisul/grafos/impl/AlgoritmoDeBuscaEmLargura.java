@@ -1,7 +1,7 @@
 package br.com.unisul.grafos.impl;
 
 /**
- * Algoritmo de busca em largura (Não usado nesse trabalho)
+ * Algoritmo teste de busca em largura (Não usado no trabalho)
  * @author emikael
  *
  */
