@@ -42,22 +42,18 @@ public class Grafo {
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
-        /*
-         * Metodo recursivo para adicionar uma aresta 
-         * quando o grafo não for direcionado.
-         * Assim terá duas arestas
-         * Inicial -> Final
-         * Final -> Inicial
-         */
         if (!direcionado) {
-			adicionarAresta(fim, inicio, true, peso, valorado);
-		} else {
-			Aresta arestaAdjcente = existeArestaComOsVerticfes(fim, inicio);
-			
-			if (arestaAdjcente != null) {
-				aresta.setCurvatura(1);
-				arestaAdjcente.setCurvatura(1);
-			}
+        	final Aresta arestaAdjacente = new Aresta(fim, inicio, direcionado, peso, valorado);
+            fim.adicionaAdj(arestaAdjacente);
+            _arestas.add(arestaAdjacente);
+            return;
+		} 
+        
+		Aresta arestaAdjcente = existeArestaComOsVerticfes(fim, inicio);
+		
+		if (arestaAdjcente != null) {
+			aresta.setCurvatura(1);
+			arestaAdjcente.setCurvatura(1);
 		}
     }
     

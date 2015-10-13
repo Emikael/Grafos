@@ -34,7 +34,7 @@ public class Aresta {
 	private Rectangle2D _areaDoTexto;
 	private Point2D.Double _controleDeCurva;
 	private Point2D.Double _posicaoFinal;
-	private Ellipse2D.Double conexaoEmAutoLaco;
+	private Ellipse2D.Double _conexaoEmAutoLaco;
 	
 	private double _larguraVerticeDeInicial = Vertice.LARGURA;
 	private double _larguraVerticeFinal = Vertice.LARGURA;
@@ -63,9 +63,9 @@ public class Aresta {
         this._isMesmoVertice = inicio == fim;
         
 		this._conexaoEmCurva = new QuadCurve2D.Double();
+		this._conexaoEmAutoLaco = new Ellipse2D.Double();
 		this._controleDeCurva = new Point2D.Double();
 		this._posicaoFinal = new Point2D.Double();
-		this.conexaoEmAutoLaco = new Ellipse2D.Double();
 		
 		this._centroVerticeInicial = this._inicio.getCentroVertice();
 		this._centroVerticeFinal = this._fim.getCentroVertice();
@@ -102,10 +102,10 @@ public class Aresta {
 	private void calcularODesenhoDaAresta() {
 		
 		if (_isMesmoVertice){
-			conexaoEmAutoLaco.x = _centroVerticeInicial.getX();
-			conexaoEmAutoLaco.y = _centroVerticeInicial.getY() - _larguraVerticeDeInicial;
-			conexaoEmAutoLaco.width = _larguraVerticeDeInicial;
-			conexaoEmAutoLaco.height = _larguraVerticeDeInicial;
+			_conexaoEmAutoLaco.x = _centroVerticeInicial.getX();
+			_conexaoEmAutoLaco.y = _centroVerticeInicial.getY() - _larguraVerticeDeInicial;
+			_conexaoEmAutoLaco.width = _larguraVerticeDeInicial;
+			_conexaoEmAutoLaco.height = _larguraVerticeDeInicial;
 		} else {
 			
 			double distanciaX, distanciaY, centroX, centroY, distancia, fatorX, fatorY;
@@ -176,7 +176,7 @@ public class Aresta {
 
 		calcularAreaTexto(graphics2D.getFontMetrics());
 
-		_conexaoEntreOsVertices = _isMesmoVertice ? conexaoEmAutoLaco : _conexaoEmCurva;
+		_conexaoEntreOsVertices = _isMesmoVertice ? _conexaoEmAutoLaco : _conexaoEmCurva;
 		desenharAresta(graphics2D);
 	}
     
