@@ -38,6 +38,9 @@ public class GrafoListaAdj extends Grafo {
     		
             grafo.append(verticeInicio.getId()).append(" --> ");
             
+            /*
+             * Preenche a saido do grafo com as vertices adjacentes.
+             */
             for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
                 verticeFim = aresta.getFim();
                 grafo.append(verticeFim.getId()).append(", ");

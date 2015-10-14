@@ -9,6 +9,9 @@ import java.awt.geom.Point2D;
  */
 public class Seta {
 	
+	/*
+	 * Constantes usadas para calcular a seta.
+	 */
 	public static double ANGULO_SETA = Math.PI / 15d;
 	public static double COMPRIMENTO_SETA = 10d;
 
@@ -23,30 +26,47 @@ public class Seta {
 	public void desenhar(Graphics2D graphics2D, boolean isMesmoVertice){
 		if (isMesmoVertice) { return; }
 
+		/*
+		 * Desenha a seta na tela.
+		 */
 		graphics2D.draw(_linha1);
 		graphics2D.draw(_linha2);
 	}
 
 	/*
 	 * Calcula o formato e a posição da Seta
-	 * parametro 'controle' o ponto de controle da Aresta (ponto onde ela faz a curva) 
-	 * @param fim
 	 */
 	public void calcular(Point2D controleDeCurva, Point2D pontoFinal, boolean isMesmoVertice) {
 		if (isMesmoVertice) { return; }
 		
-		double angle = Math.atan2((controleDeCurva.getX() - pontoFinal.getX()), (controleDeCurva.getY() - pontoFinal.getY()));
-		angle += ANGULO_SETA;
-		double endX = Math.sin(angle) * COMPRIMENTO_SETA + pontoFinal.getX();
-		double endY = Math.cos(angle) * COMPRIMENTO_SETA + pontoFinal.getY();
+		/*
+		 * Pega o angulo que a seta irá se posicionar.
+		 */
+		double angulo = Math.atan2((controleDeCurva.getX() - pontoFinal.getX()), (controleDeCurva.getY() - pontoFinal.getY()));
+		angulo += ANGULO_SETA;
+		
+		/*
+		 * Pega as coordenadas X e Y, com base no angulo e nas coordenadas do vertice final.
+		 */
+		double coordenadaX = Math.sin(angulo) * COMPRIMENTO_SETA + pontoFinal.getX();
+		double coordenadaY = Math.cos(angulo) * COMPRIMENTO_SETA + pontoFinal.getY();
 
-		_linha1.setLine(pontoFinal.getX(), pontoFinal.getY(), endX, endY);
+		/*
+		 * Cria a primeira linha da seta.
+		 */
+		_linha1.setLine(pontoFinal.getX(), pontoFinal.getY(), coordenadaX, coordenadaY);
 
-		angle -= 2 * ANGULO_SETA;
-		endX = Math.sin(angle) * COMPRIMENTO_SETA + pontoFinal.getX();
-		endY = Math.cos(angle) * COMPRIMENTO_SETA + pontoFinal.getY();
+		/*
+		 * Pega o novo angulo e as novas coordenadas X e Y da linha.
+		 */
+		angulo -= 2 * ANGULO_SETA;
+		coordenadaX = Math.sin(angulo) * COMPRIMENTO_SETA + pontoFinal.getX();
+		coordenadaY = Math.cos(angulo) * COMPRIMENTO_SETA + pontoFinal.getY();
 
-		_linha2.setLine(pontoFinal.getX(), pontoFinal.getY(), endX, endY);
+		/*
+		 * Cria a segunda linha da seta.
+		 */
+		_linha2.setLine(pontoFinal.getX(), pontoFinal.getY(), coordenadaX, coordenadaY);
 	}
 
 

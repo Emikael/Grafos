@@ -18,10 +18,10 @@ public class Vertice implements Comparable<Vertice> {
 
 	public static Double LARGURA = 40D;
 	
-	private int _id;
+	private String _id;
     private List<Aresta> _adjacente;
-    private double _posicaoX;
-	private double _posicaoY;
+    private double _coordenadaX;
+	private double _coordenadaY;
 	private Shape _desenhoVertice;
 	private Point2D _centroVertice;
 	private Double _distancia;
@@ -37,14 +37,14 @@ public class Vertice implements Comparable<Vertice> {
      * Cria o desenho de um circulo para representar um vertice.
      * Calcula o centro do vertice.
      */
-    public Vertice(int id, double posicaoX, double posicaoY) {
+    public Vertice(String id, double coordenadaX, double coordenadaY) {
         this._id = id;
         this._adjacente = new ArrayList<Aresta>();
-        this._posicaoX = posicaoX;
-        this._posicaoY = posicaoY;
-        this._desenhoVertice = new Ellipse2D.Double(_posicaoX, _posicaoY, LARGURA, LARGURA);
+        this._coordenadaX = coordenadaX;
+        this._coordenadaY = coordenadaY;
+        this._desenhoVertice = new Ellipse2D.Double(_coordenadaX, _coordenadaY, LARGURA, LARGURA);
         this._centroVertice = new Point2D.Double();
-		this._centroVertice.setLocation(_posicaoX + (LARGURA / 2), _posicaoY + (LARGURA / 2));
+		this._centroVertice.setLocation(_coordenadaX + (LARGURA / 2), _coordenadaY + (LARGURA / 2));
     }
     
     /*
@@ -58,7 +58,7 @@ public class Vertice implements Comparable<Vertice> {
         _adjacente.add(aresta);
     }
     
-    public int getId() {
+    public String getId() {
     	return this._id;
     }
     
@@ -67,12 +67,22 @@ public class Vertice implements Comparable<Vertice> {
      */
     public void desenharVertice(Graphics2D graphics2D) {
 		graphics2D.setPaint(Color.WHITE);
+		/*
+		 * Preenche a area do desenha onde ficará o vertice.
+		 */
 		graphics2D.fill(_desenhoVertice);
 
 		graphics2D.setStroke(new BasicStroke(2));
 		graphics2D.setPaint(Color.BLACK);
+		
+		/*
+		 * Desenha o vertice na tela.
+		 */
 		graphics2D.draw(_desenhoVertice);
 		
+		/*
+		 * Desenha o nome do vertice na tela.
+		 */
 		desenharNome(graphics2D);
 	}
 	
@@ -82,8 +92,11 @@ public class Vertice implements Comparable<Vertice> {
 	public void desenharNome(Graphics2D graphics2D) {
 		final FontMetrics metrics = graphics2D.getFontMetrics();
 		
-		graphics2D.drawString(String.valueOf(_id), 
-				(float) (_centroVertice.getX() - (metrics.stringWidth(String.valueOf(_id)) / 2) + 1), 
+		/*
+		 * Desenha o nome do vertice na tela.
+		 */
+		graphics2D.drawString(_id, 
+				(float) (_centroVertice.getX() - (metrics.stringWidth(_id) / 2) + 1), 
 				(float) (_centroVertice.getY() + metrics.getHeight() - 10));
 		
 	}
@@ -95,20 +108,20 @@ public class Vertice implements Comparable<Vertice> {
 		return _desenhoVertice.contains(ponto);
 	}
 
-	public Double get_posicaoX() {
-		return _posicaoX;
+	public Double getCoordenadaX() {
+		return _coordenadaX;
 	}
 
-	public void set_posicaoX(Double _posicaoX) {
-		this._posicaoX = _posicaoX;
+	public void setCoordenadaX(Double coordenadaX) {
+		this._coordenadaX = coordenadaX;
 	}
 
-	public Double get_posicaoY() {
-		return _posicaoY;
+	public Double getCoordenadaY() {
+		return _coordenadaY;
 	}
 
-	public void set_posicaoY(Double _posicaoY) {
-		this._posicaoY = _posicaoY;
+	public void setCoordenadaY(Double coordenadaY) {
+		this._coordenadaY = coordenadaY;
 	}
 	
 	public Point2D getCentroVertice() {
@@ -139,8 +152,11 @@ public class Vertice implements Comparable<Vertice> {
 		this._pai = pai;
 	}
 	
+	/*
+	 * Retorna um ponto2D com base na posição do vertice na tela.
+	 */
 	public Point2D getPonto() {
-		return new Point2D.Double(get_posicaoX(), get_posicaoY());
+		return new Point2D.Double(getCoordenadaX(), getCoordenadaY());
 	}
 	
 	@Override

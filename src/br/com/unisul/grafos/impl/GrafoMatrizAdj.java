@@ -13,7 +13,6 @@ public class GrafoMatrizAdj extends Grafo {
 	List<Vertice> _vertices;
     List<Aresta> _arestas;
     double[][] _matriz;
-    boolean _isValorado;
 
     /*
      * Construtor da Classe.
@@ -31,17 +30,27 @@ public class GrafoMatrizAdj extends Grafo {
     public String exibiGrafo() {
 		final StringBuilder grafo = new StringBuilder();
 		
+		/*
+		 * Gera a matriz de adjacencia.
+		 */
 		gerarMatriz();
 		grafo.append("#### GRAFO MATRIZ DE ADJACENCIA ####\n");
+		/*
+		 * Monta o cabeçalho para mostrar na saida do grafo.
+		 */
     	montaCabecalhoGrafo(grafo);
 
-    	for (int i = 0; i < _matriz.length; i++) {
-			grafo.append(_vertices.get(i).getId()).append("");
-			for (int j = 0; j < _matriz.length; j++) {
-				if (_isValorado) {
-					grafo.append("|").append(_matriz[i][j]).append("|");
+    	for (int indicePai = 0; indicePai < _matriz.length; indicePai++) {
+			grafo.append(_vertices.get(indicePai).getId()).append("");
+			for (int indiceFilho = 0; indiceFilho < _matriz.length; indiceFilho++) {
+				/*
+				 * Se o grafo for usa o valor que foi passado na aresta.
+				 * Caso contrario usa 0 ou 1 para representar as vertices com ligações entre si.
+				 */
+				if (isValorado()) {
+					grafo.append("|").append(_matriz[indicePai][indiceFilho]).append("|");
 				} else {
-					preencheValoresGrafoNaoValorado(grafo, i, j);
+					preencheValoresGrafoNaoValorado(grafo, indicePai, indiceFilho);
 				}
 			}
 			
@@ -53,6 +62,10 @@ public class GrafoMatrizAdj extends Grafo {
         return grafo.toString();
 	}
 
+    /*
+     * Preenche a saida do grafo com 0 ou 1
+     * para representar se os vertices tem ligações entre si.
+     */
 	private void preencheValoresGrafoNaoValorado(final StringBuilder grafo, int posicaoPai, int posicaoFilho) {
 		if (_matriz[posicaoPai][posicaoFilho] == 1D) {
 			grafo.append("|1|");
@@ -81,15 +94,28 @@ public class GrafoMatrizAdj extends Grafo {
 	 * Metodo que gera uma matriz apartir da lista de arestas.
 	 */
 	private void gerarMatriz() {
-		int tamanhoMatriz = _vertices.size();
+		/*
+		 * Pega o tamanho da lista dos vertices para criar a matriz.
+		 */
+		final int tamanhoMatriz = _vertices.size();
 
+		/*
+		 * Cria a matriz adjacencia.
+		 */
 		_matriz = new double[tamanhoMatriz][tamanhoMatriz];
 
-		_isValorado = _arestas.get(0).isValorado();
-		
 		for (Aresta aresta : _arestas){
-			double valor = _isValorado ? aresta.getPeso() : 1D;
-			_matriz[aresta.getInicio().getId() - 1][aresta.getFim().getId() - 1] = valor;
+			/*
+			 * Pega os indices dos vertices inicial e final.
+			 */
+			final int indiceVerticeInicial = getIndiceDoVertice(aresta.getInicio());
+			final int indiceVerticeFinal = getIndiceDoVertice(aresta.getFim());
+			
+			/*
+			 * Pega o valor da aresta e adiciona na matriz.
+			 */
+			final double valor = isValorado() ? aresta.getPeso() : 1D;
+			_matriz[indiceVerticeInicial][indiceVerticeFinal] = valor;
 		}
 	}
 

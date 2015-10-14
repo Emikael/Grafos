@@ -16,6 +16,7 @@ public class Grafo {
 	
 	List<Vertice> _vertices;
     List<Aresta> _arestas;
+    private int _valorTabelaAscii = 64;
     
     /*
      * Construtor da classe.
@@ -38,10 +39,17 @@ public class Grafo {
      * Metodo que adiciona uma arestas no grafo.
      */
     public void adicionarAresta(Vertice inicio, Vertice fim, boolean direcionado, Double peso, boolean valorado) {
+    	/*
+    	 * Cria e adiciona a aresta no grafo.
+    	 */
     	final Aresta aresta = new Aresta(inicio, fim, direcionado, peso, valorado);
         inicio.adicionaAdj(aresta);
         _arestas.add(aresta);
         
+        /*
+         * Case a aresta não seja direcionada cria outra aresta
+         * ligando o vertice final com o inicial.
+         */
         if (!direcionado) {
         	final Aresta arestaAdjacente = new Aresta(fim, inicio, direcionado, peso, valorado);
             fim.adicionaAdj(arestaAdjacente);
@@ -49,6 +57,10 @@ public class Grafo {
             return;
 		} 
         
+        /*
+         * Se a aresta for direcionada verifica se existe outra aresta
+         * ligando o mesmo vertice, caso existe seta a curvatura das arestas.
+         */
 		Aresta arestaAdjcente = existeArestaComOsVerticfes(fim, inicio);
 		
 		if (arestaAdjcente != null) {
@@ -57,6 +69,9 @@ public class Grafo {
 		}
     }
     
+    /*
+     * Verifica se existe alguma aresta ligando os vertices final e inicial.
+     */
     private Aresta existeArestaComOsVerticfes(Vertice fim, Vertice inicio) {
     	for (Aresta aresta : _arestas) {
 			if (aresta.getInicio().getId() == fim.getId() && aresta.getFim().getId() == inicio.getId()) {
@@ -68,7 +83,7 @@ public class Grafo {
 	}
 
 	/*
-     * Metodo que adiciona uma aresta apartir de posições selecionadas na telayj
+     * Metodo que adiciona uma aresta a partir de posições selecionadas na tela.
      * Para cada posição passada como parametro
      * irá busca o vertice daquela posição.
      */
@@ -101,10 +116,16 @@ public class Grafo {
      * Metodo que desenha o grafo na tela.
      */
     public void desenharGrafo(Graphics2D graphics2D) {
+    	/*
+    	 * Desenhas os vertices na tela.
+    	 */
     	for (Vertice vertice : _vertices) {
 			vertice.desenharVertice(graphics2D);
 		}
 
+    	/*
+    	 * Desenha as arestas na tela.
+    	 */
     	for (Aresta aresta : _arestas) {
     		aresta.desenhaAresta(graphics2D);
     	}
@@ -127,9 +148,29 @@ public class Grafo {
     /*
      * Metodo que retorna um identificador para o vertice.
      */
-    private int getId() {
-    	return _vertices.size() + 1;
+    private String getId() {
+    	/*
+    	 * Transforma um valor inteiro em caracter com base na tabela ASCII.
+    	 */
+		_valorTabelaAscii++;
+		final String id = new Character((char)_valorTabelaAscii).toString();
+		
+		return id;
     }
+    
+    /*
+     * Verifica se o grafo é valorado.
+     */
+    public boolean isValorado() {
+    	return _arestas.get(0).isValorado();
+    }
+    
+    /*
+	 * Retorna o indice do vertice na lista de vertices.
+	 */
+	public int getIndiceDoVertice(Vertice vertice) {
+		return _vertices.indexOf(vertice);
+	}
     
     public List<Vertice> getVertices() {
     	return _vertices;

@@ -30,6 +30,9 @@ public class GrafoListaArestas extends Grafo {
 		final StringBuilder arestasIniciais = new StringBuilder("g = (");
 		final StringBuilder arestasFinais = new StringBuilder("h = (");
     	
+		/*
+		 * Pega todas os vertices iniciais e final das arestas.
+		 */
 		for (Aresta aresta : _arestas) {
 			arestasIniciais.append(aresta.getInicio().getId()).append(", ");
 			arestasFinais.append(aresta.getFim().getId()).append(", ");

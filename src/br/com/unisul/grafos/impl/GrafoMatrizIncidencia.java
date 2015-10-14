@@ -30,20 +30,36 @@ public class GrafoMatrizIncidencia extends Grafo {
 		final StringBuilder grafo = new StringBuilder();
     	
 		grafo.append("#### GRAFO MATRIZ DE INCIDENCIA ####\n");
+		
+		/*
+		 * Monta o cabeçalho para mostrar na saida do grafo.
+		 */
 		montaCabecalhoGrafo(grafo);
     	for (Vertice vertice : _vertices) {
     		grafo.append(vertice.getId());
     		for (Aresta aresta : _arestas) {
+    			/*
+    			 * Se o vertice inicial da aresta for igual ao 
+    			 * vertice que está sendo verificado seta 1.
+    			 */
 				if (vertice.getId() == aresta.getInicio().getId()) {
 					grafo.append("|    1   |");
 					continue;
 				}
 				
+				/*
+    			 * Se o vertice final da aresta for igual ao 
+    			 * vertice que está sendo verificado seta -1.
+    			 */
 				if (vertice.getId() == aresta.getFim().getId()) {
 					grafo.append("|   -1   |");
 					continue;
 				}
 				
+				/*
+				 * Se o vertice que está sendo verificado não estiver
+				 * presente na aresta seta 0.
+				 */
 				grafo.append("|    0   |");
 			}
     		

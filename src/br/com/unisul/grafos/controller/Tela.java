@@ -10,15 +10,12 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 
 import br.com.unisul.grafos.impl.Grafo;
 import br.com.unisul.grafos.impl.GrafoDeConexidade;
@@ -26,6 +23,7 @@ import br.com.unisul.grafos.impl.GrafoListaAdj;
 import br.com.unisul.grafos.impl.GrafoListaArestas;
 import br.com.unisul.grafos.impl.GrafoMatrizAdj;
 import br.com.unisul.grafos.impl.GrafoMatrizIncidencia;
+import br.com.unisul.grafos.impl.Utils;
 
 /*
  *	TELA DA APLICAÇÂO 
@@ -188,7 +186,7 @@ public class Tela extends JFrame {
 			_painelInfo.add(_radioDirecionado);
 			_painelInfo.add(_radioNaoDirecionado);
 			
-			_painelInfo.add(criaSeparadorVertical());
+			_painelInfo.add(Utils.criaSeparadorVertical());
 
 			_painelInfo.add(_radioValorado);
 			_painelInfo.add(_radioNaoValorado);
@@ -197,12 +195,6 @@ public class Tela extends JFrame {
 		}
 		return _painelInfo;
 	}
-	
-	private JComponent criaSeparadorVertical() {
-        JSeparator separador = new JSeparator(SwingConstants.VERTICAL);
-        separador.setPreferredSize(new Dimension(3,25));
-        return separador;
-    }
 	
 	/*
 	 * Cria painel onde o grafo é desenhado.
@@ -291,8 +283,6 @@ public class Tela extends JFrame {
 	 */
 	public void geraGrafoAPartirDo(Grafo grafo) {
 		try {
-			_saidaDoGrafo.append("Grafo Direcionado: " + _radioDirecionado.isSelected() + "\n");
-			
 			if (grafo instanceof GrafoListaAdj) {
 				_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
 			}
@@ -312,11 +302,6 @@ public class Tela extends JFrame {
 			if (grafo instanceof GrafoDeConexidade) {
 				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
 			}
-			
-			_radioDirecionado.setEnabled(false);
-			_radioNaoDirecionado.setEnabled(false);
-			_radioValorado.setEnabled(false);
-			_radioNaoValorado.setEnabled(false);
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());

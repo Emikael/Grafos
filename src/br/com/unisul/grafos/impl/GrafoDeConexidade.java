@@ -150,16 +150,20 @@ public class GrafoDeConexidade extends Grafo {
 
 		for (Vertice verticeInicio : _vertices) {
 			maiorCentro = 0;
+			final int indiceVerticeInicial = getIndiceDoVertice(verticeInicio);
+
 			for (Vertice verticeFim : _vertices) {
 				grauDeConexidade = getGrauDeConexidadeEntreOsVertices(verticeInicio, verticeFim);
-				_matriz[verticeInicio.getId() - 1][verticeFim.getId() - 1] = grauDeConexidade;
+				
+				final int indiceVerticeFinal = getIndiceDoVertice(verticeFim);
+				_matriz[indiceVerticeInicial][indiceVerticeFinal] = grauDeConexidade;
 				
 				if (grauDeConexidade > maiorCentro) {
 					maiorCentro = grauDeConexidade;
 				}
 			}
 			
-			_matriz[verticeInicio.getId() - 1][tamanhoMatriz] = maiorCentro;
+			_matriz[indiceVerticeInicial][tamanhoMatriz] = maiorCentro;
 		}
 	}
 

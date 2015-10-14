@@ -30,16 +30,16 @@ public class Aresta {
     private Seta _seta;
     private boolean _isMesmoVertice;
     
-    private QuadCurve2D.Double _conexaoEmCurva;
 	private int _curvatura = 0;
 	private Rectangle2D _areaDoTexto;
 	private Point2D.Double _controleDeCurva;
 	private Point2D.Double _posicaoFinal;
+
+	private QuadCurve2D.Double _conexaoEmCurva;
 	private Ellipse2D.Double _conexaoEmAutoLaco;
 	private Line2D.Double _conexaoEmLinha;
 	
 	private double _larguraVerticeDeInicial = Vertice.LARGURA;
-//	private double _larguraVerticeFinal = Vertice.LARGURA;
 	private Point2D _centroVerticeInicial;
 	private Point2D _centroVerticeFinal;
 	private Shape _conexaoEntreOsVertices;
@@ -51,8 +51,6 @@ public class Aresta {
 
     /*
      * Construtor da classe.
-     * Recebe um vertice inicial e um final para criação da aresta.
-     * Calcula o angulo de cada vertice para o desenho da aresta.
      */
     public Aresta(Vertice inicio, Vertice fim, boolean direcionada, Double peso, boolean valorado) {
         this._inicio = inicio;
@@ -81,88 +79,170 @@ public class Aresta {
     public void desenharAresta(Graphics2D graphics2D) {
     	graphics2D.setStroke(new BasicStroke());
     	graphics2D.setPaint(Color.BLACK);
+    	/*
+    	 * Desenha a aresta na tela.
+    	 */
     	graphics2D.draw(_conexaoEntreOsVertices);
     	
+    	/*
+    	 * Se a aresta for direcionada desenha a seta na tela.
+    	 */
     	if (_direcionada) {
     		_seta.desenhar(graphics2D, _isMesmoVertice);
 		}
     	
+    	/*
+    	 * Se a aresta for valorada desenha o valor na tela.
+    	 */
     	if (_valorado) {
-    		desenharTexto(graphics2D);
+    		desenharValorDaAresta(graphics2D);
 		}
     }
     
-    private void desenharTexto(Graphics2D graphics2D) {
+    /*
+     * Desenha o valor da aresta na tela.
+     */
+    private void desenharValorDaAresta(Graphics2D graphics2D) {
     	graphics2D.setPaint(Color.WHITE);
+    	/*
+    	 * Preenche a area de texto onde será desenhado o valor da aresta.
+    	 */
     	graphics2D.fill(_areaDoTexto);
     	
+    	/*
+    	 * Seta a fonte que será desenhado.
+    	 */
 		graphics2D.setFont(new Font("Serif", Font.BOLD, 12));
     	graphics2D.setPaint(Color.BLUE);
 		
+    	/*
+    	 * Desenha o valor da aresta na tela.
+    	 */
 		final FontMetrics fonteMetrics = graphics2D.getFontMetrics();
 		graphics2D.drawString(String.valueOf(_peso), (int) _areaDoTexto.getX(), (int) _areaDoTexto.getY() + fonteMetrics.getHeight());
 	}
     
-	private void calcularODesenhoDaAresta() {
+    /*
+     * Métoque que define a forma que a aresta será desenhada na tela.
+     * Aresta em linha.
+     * Aresta em auto laço.
+     * Aresta em curva.
+     */
+	private void defineAFormaDaAresta() {
 		double anguloInicial, anguloFinal = 0D;
 		Point2D pontoInicial, pontoFinal = null;
 		
+		/*
+		 * Verifica se aresta está ligando o mesmo vertice.
+		 * Se estiver cria uma aresta em auto laço.
+		 */
 		if (_isMesmoVertice){
 			_conexaoEmAutoLaco.x = _centroVerticeInicial.getX();
 			_conexaoEmAutoLaco.y = _centroVerticeInicial.getY() - _larguraVerticeDeInicial;
 			_conexaoEmAutoLaco.width = _larguraVerticeDeInicial;
 			_conexaoEmAutoLaco.height = _larguraVerticeDeInicial;
 			
+		/*
+		 * Verifica se a aresta não é direcionada, caso não for cria uma aresta em linha.
+		 */
 		} else if (!_direcionada) {
+			/*
+			 * Pega os angulos dos vertices.
+			 */
 			anguloInicial = Utils.getAngulo(_centroVerticeInicial, _centroVerticeFinal);
 			anguloFinal = Utils.getAngulo(_centroVerticeFinal, _centroVerticeInicial);
 			
+			/*
+			 * Pega os pontos2D dos vertices.
+			 */
 			pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial);
 			pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal);
 			
+			/*
+			 * Seta a aresta em linha.
+			 */
 			_conexaoEmLinha = new Line2D.Double(pontoInicial, pontoFinal);
 			
 		} else {
+			
+			/*
+			 * Cria uma aresta em curva caso ela seja direcionada
+			 * Calcula a curva que a aresta irá fazer caso mais de uma aresta estaja
+			 * ligando os mesmo vertices.
+			 */
 			
 			double distanciaX, distanciaY, centroX, centroY, distancia, fatorX, fatorY;
 			
 			int contador = 1;
 			Point2D.Double inicio = null;
 			
+			/*
+			 * Realiza o calculo duas vezes para que o desenho da aresta fique alinhado aos vertices.
+			 */
 			while(contador <= 2 ) {
+				/*
+				 * Pega os angulos dos vertices.
+				 */
 				anguloInicial = Utils.getAngulo(_centroVerticeInicial, _controleDeCurva);
 				anguloFinal = Utils.getAngulo(_controleDeCurva, _centroVerticeFinal);
 				
+				/*
+				 * Pega os pontos2D dos vertices.
+				 */
 				pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial - ANGULO);
 				pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal - Math.PI + ANGULO);
 				
+				/*
+				 * Pega o ponto inicial da aresta.
+				 */
 				inicio = new Point2D.Double(pontoInicial.getX(), pontoInicial.getY());
+				/*
+				 * Seta a posição final da aresta.
+				 */
 				_posicaoFinal.setLocation(pontoFinal.getX(), pontoFinal.getY());
 				
+				/*
+				 * Pega as distancias das coordenadas X e Y da aresta.
+				 */
 				distanciaX = _posicaoFinal.x - inicio.x;
 				distanciaY = _posicaoFinal.y - inicio.y;
 				
+				/*
+				 * Pega os centros nas coordenadas X e Y da aresta.
+				 */
 				centroX = (inicio.x + _posicaoFinal.x) / 2.0;
 				centroY = (inicio.y + _posicaoFinal.y) / 2.0;
 				
+				/*
+				 * Realiza calculo para a curvar as arestas.
+				 */
 				distancia = Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY);
 				fatorX = distancia == 0D ? 0D : distanciaX / distancia;
 				fatorY = distancia == 0D ? 0D : distanciaY / distancia;
 				
+				/*
+				 * Seta a curva que a aresta irá fazer.
+				 */
 				_controleDeCurva.x = (centroX + _curvatura * _larguraVerticeDeInicial * fatorY);
 				_controleDeCurva.y = (centroY - _curvatura * _larguraVerticeDeInicial * fatorX);
 				
 				contador++;
 			}
 			
+			/*
+			 * Seta a aresta com curvatura.
+			 */
 			_conexaoEmCurva.setCurve(inicio.x, inicio.y, _controleDeCurva.x, _controleDeCurva.y, _posicaoFinal.x, _posicaoFinal.y);
 		}
 	}
 	
 	/*
-	 * Calcula o desenho do texto da aresta
+	 * Calcula a area que o texto do valor da aresta irá ocupar.
 	 */
 	private void calcularAreaTexto(FontMetrics fonteMetrics) {
+		/*
+		 * Cria um retangulo para que o desenho do valor da aresta seja colocado.
+		 */
 		if (_isMesmoVertice) {
 			_areaDoTexto.setRect((Math.abs(_centroVerticeInicial.getX() + (_larguraVerticeDeInicial / 2)) - (fonteMetrics.stringWidth(String.valueOf(_peso)) / 2)), 
 					(Math.abs(_centroVerticeInicial.getY() - _larguraVerticeDeInicial) - fonteMetrics.getHeight()), 
@@ -179,21 +259,36 @@ public class Aresta {
 	}
 	
 	/* 
-	 * Recalcula o desenho da aresta e do texto dela 
+	 * Desenha a aresta na tela.
 	 */
 	public void desenhaAresta(Graphics2D graphics2D) {
-		calcularODesenhoDaAresta();
+		defineAFormaDaAresta();
 
+		/*
+		 * Se a aresta for direcionada calcula o formato da seta.
+		 */
 		if (_direcionada) {
 			_seta.calcular(_controleDeCurva, _posicaoFinal, _isMesmoVertice);
 		}
 
 		calcularAreaTexto(graphics2D.getFontMetrics());
 		
+		/*
+		 * Se a aresta não for direcionada, cria uma aresta em linha.
+		 */
 		if (!_direcionada) {
 			_conexaoEntreOsVertices = _conexaoEmLinha;
+			
+		/*
+		 * Se a aresta estiver ligando o mesmo vertice, cria uma aresta em auto laço.
+		 */
 		} else if (_isMesmoVertice) {
 			_conexaoEntreOsVertices = _conexaoEmAutoLaco;
+			
+		/*
+		 * Caso contrario cria uma aresta com curvatura, 
+		 * se a aresta for direcionada e se já existir outra aresta ligando os mesmo vertices.
+		 */
 		} else {
 			_conexaoEntreOsVertices = _conexaoEmCurva;
 		}
