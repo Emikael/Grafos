@@ -277,14 +277,14 @@ public class Aresta {
 		/*
 		 * Se a aresta não for direcionada, cria uma aresta em linha.
 		 */
-		if (!_direcionada) {
-			_conexaoEntreOsVertices = _conexaoEmLinha;
+		if (_isMesmoVertice) {
+			_conexaoEntreOsVertices = _conexaoEmAutoLaco;
 			
 		/*
 		 * Se a aresta estiver ligando o mesmo vertice, cria uma aresta em auto laço.
 		 */
-		} else if (_isMesmoVertice) {
-			_conexaoEntreOsVertices = _conexaoEmAutoLaco;
+		} else if (!_direcionada) {
+			_conexaoEntreOsVertices = _conexaoEmLinha;
 			
 		/*
 		 * Caso contrario cria uma aresta com curvatura, 
