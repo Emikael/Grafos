@@ -158,13 +158,6 @@ public class Grafo {
 		return id;
     }
     
-    /*
-     * Verifica se o grafo é valorado.
-     */
-    public boolean isValorado() {
-    	return _arestas.get(0).isValorado();
-    }
-    
     public List<Vertice> getVertices() {
     	return _vertices;
     }

@@ -126,4 +126,10 @@ public class GrafoMatrizAdj extends Grafo {
 		return _vertices.indexOf(vertice);
 	}
 
+	/*
+     * Verifica se o grafo é valorado.
+     */
+    public boolean isValorado() {
+    	return _arestas.get(0).isValorado();
+    }
 }
