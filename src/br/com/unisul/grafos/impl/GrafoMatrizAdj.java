@@ -83,9 +83,9 @@ public class GrafoMatrizAdj extends Grafo {
     		if (i == 0) {
     			grafo.append("  |");
     		} else {
-    			grafo.append("| ");
+    			grafo.append("|");
     		}
-    		grafo.append(_vertices.get(i).getId()).append("   |");
+    		grafo.append(_vertices.get(i).getId()).append("|");
 		}
     	grafo.append("\n");
     }
