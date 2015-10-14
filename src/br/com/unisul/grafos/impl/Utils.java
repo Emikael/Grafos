@@ -2,6 +2,8 @@ package br.com.unisul.grafos.impl;
 
 import java.awt.geom.Point2D;
 
+import br.com.unisul.grafos.entity.Vertice;
+
 /*
  * Classe responsavel por realizar calculos para o grafo.
  */
@@ -22,10 +24,10 @@ public class Utils {
 	 * Retorna o ponto da circunferencia de um vertice que é correspondente
 	 * a um determinado angulo dessa circunferencia
 	 */
-	public static Point2D getPontoNoVertice(Point2D centrovertice, double angulo, double largura) {
+	public static Point2D getPontoNoVertice(Point2D centrovertice, double angulo) {
 		final Point2D ponto = new Point2D.Double(centrovertice.getX(), centrovertice.getY());
-		final double posicaoX = Math.cos(angulo) * (largura / 2);
-		final double posicaoY = Math.sin(angulo) * (largura / 2);
+		final double posicaoX = Math.cos(angulo) * (Vertice.LARGURA / 2);
+		final double posicaoY = Math.sin(angulo) * (Vertice.LARGURA / 2);
 		
 		ponto.setLocation(ponto.getX() + posicaoX, ponto.getY() + posicaoY);
 		return ponto;

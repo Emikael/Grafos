@@ -7,6 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
@@ -35,9 +36,10 @@ public class Aresta {
 	private Point2D.Double _controleDeCurva;
 	private Point2D.Double _posicaoFinal;
 	private Ellipse2D.Double _conexaoEmAutoLaco;
+	private Line2D.Double _conexaoEmLinha;
 	
 	private double _larguraVerticeDeInicial = Vertice.LARGURA;
-	private double _larguraVerticeFinal = Vertice.LARGURA;
+//	private double _larguraVerticeFinal = Vertice.LARGURA;
 	private Point2D _centroVerticeInicial;
 	private Point2D _centroVerticeFinal;
 	private Shape _conexaoEntreOsVertices;
@@ -64,6 +66,8 @@ public class Aresta {
         
 		this._conexaoEmCurva = new QuadCurve2D.Double();
 		this._conexaoEmAutoLaco = new Ellipse2D.Double();
+		this._conexaoEmLinha = new Line2D.Double();
+		
 		this._controleDeCurva = new Point2D.Double();
 		this._posicaoFinal = new Point2D.Double();
 		
@@ -100,30 +104,40 @@ public class Aresta {
 	}
     
 	private void calcularODesenhoDaAresta() {
+		double anguloInicial, anguloFinal = 0D;
+		Point2D pontoInicial, pontoFinal = null;
 		
 		if (_isMesmoVertice){
 			_conexaoEmAutoLaco.x = _centroVerticeInicial.getX();
 			_conexaoEmAutoLaco.y = _centroVerticeInicial.getY() - _larguraVerticeDeInicial;
 			_conexaoEmAutoLaco.width = _larguraVerticeDeInicial;
 			_conexaoEmAutoLaco.height = _larguraVerticeDeInicial;
+			
+		} else if (!_direcionada) {
+			anguloInicial = Utils.getAngulo(_centroVerticeInicial, _centroVerticeFinal);
+			anguloFinal = Utils.getAngulo(_centroVerticeFinal, _centroVerticeInicial);
+			
+			pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial);
+			pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal);
+			
+			_conexaoEmLinha = new Line2D.Double(pontoInicial, pontoFinal);
+			
 		} else {
 			
 			double distanciaX, distanciaY, centroX, centroY, distancia, fatorX, fatorY;
 			
-			int count = 1;
-			double angulo1, angulo2 = 0D;
-			Point2D ponto1, ponto2 = null;
+			int contador = 1;
 			Point2D.Double inicio = null;
 			
-			while(count <= 2 ) {
-				angulo1 = Utils.getAngulo(_centroVerticeInicial, _controleDeCurva);
-				angulo2 = Utils.getAngulo(_controleDeCurva, _centroVerticeFinal);
+			while(contador <= 2 ) {
+				anguloInicial = Utils.getAngulo(_centroVerticeInicial, _controleDeCurva);
+				anguloFinal = Utils.getAngulo(_controleDeCurva, _centroVerticeFinal);
 				
-				ponto1 = Utils.getPontoNoVertice(_centroVerticeInicial, angulo1 - ANGULO, _larguraVerticeDeInicial);
-				ponto2 = Utils.getPontoNoVertice(_centroVerticeFinal, angulo2 - Math.PI + ANGULO, _larguraVerticeFinal);
+				pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial - ANGULO);
+				pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal - Math.PI + ANGULO);
 				
-				inicio = new Point2D.Double(ponto1.getX(), ponto1.getY());
-				_posicaoFinal.setLocation(ponto2.getX(), ponto2.getY());
+				inicio = new Point2D.Double(pontoInicial.getX(), pontoInicial.getY());
+				_posicaoFinal.setLocation(pontoFinal.getX(), pontoFinal.getY());
 				
 				distanciaX = _posicaoFinal.x - inicio.x;
 				distanciaY = _posicaoFinal.y - inicio.y;
@@ -138,7 +152,7 @@ public class Aresta {
 				_controleDeCurva.x = (centroX + _curvatura * _larguraVerticeDeInicial * fatorY);
 				_controleDeCurva.y = (centroY - _curvatura * _larguraVerticeDeInicial * fatorX);
 				
-				count++;
+				contador++;
 			}
 			
 			_conexaoEmCurva.setCurve(inicio.x, inicio.y, _controleDeCurva.x, _controleDeCurva.y, _posicaoFinal.x, _posicaoFinal.y);
@@ -175,8 +189,15 @@ public class Aresta {
 		}
 
 		calcularAreaTexto(graphics2D.getFontMetrics());
+		
+		if (!_direcionada) {
+			_conexaoEntreOsVertices = _conexaoEmLinha;
+		} else if (_isMesmoVertice) {
+			_conexaoEntreOsVertices = _conexaoEmAutoLaco;
+		} else {
+			_conexaoEntreOsVertices = _conexaoEmCurva;
+		}
 
-		_conexaoEntreOsVertices = _isMesmoVertice ? _conexaoEmAutoLaco : _conexaoEmCurva;
 		desenharAresta(graphics2D);
 	}
     
@@ -205,16 +226,16 @@ public class Aresta {
 		return _direcionada;
 	}
 
-	public void setDirecionada(boolean _direcionada) {
-		this._direcionada = _direcionada;
+	public void setDirecionada(boolean direcionada) {
+		this._direcionada = direcionada;
 	}
 
 	public boolean isValorado() {
 		return _valorado;
 	}
 
-	public void setValorado(boolean _valorado) {
-		this._valorado = _valorado;
+	public void setValorado(boolean valorado) {
+		this._valorado = valorado;
 	}
 
 }
