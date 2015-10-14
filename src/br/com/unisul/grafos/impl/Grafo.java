@@ -165,13 +165,6 @@ public class Grafo {
     	return _arestas.get(0).isValorado();
     }
     
-    /*
-	 * Retorna o indice do vertice na lista de vertices.
-	 */
-	public int getIndiceDoVertice(Vertice vertice) {
-		return _vertices.indexOf(vertice);
-	}
-    
     public List<Vertice> getVertices() {
     	return _vertices;
     }

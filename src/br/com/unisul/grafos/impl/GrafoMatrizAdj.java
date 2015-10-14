@@ -118,5 +118,12 @@ public class GrafoMatrizAdj extends Grafo {
 			_matriz[indiceVerticeInicial][indiceVerticeFinal] = valor;
 		}
 	}
+	
+	/*
+	 * Retorna o indice do vertice na lista de vertices.
+	 */
+	public int getIndiceDoVertice(Vertice vertice) {
+		return _vertices.indexOf(vertice);
+	}
 
 }

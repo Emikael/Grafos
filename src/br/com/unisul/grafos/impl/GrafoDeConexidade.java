@@ -281,5 +281,12 @@ public class GrafoDeConexidade extends Grafo {
 		}
     	grafo.append("\n");
     }
+	
+	/*
+	 * Retorna o indice do vertice na lista de vertices.
+	 */
+	public int getIndiceDoVertice(Vertice vertice) {
+		return _vertices.indexOf(vertice);
+	}
 
 }		
