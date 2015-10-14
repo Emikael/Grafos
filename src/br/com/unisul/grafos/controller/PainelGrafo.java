@@ -155,7 +155,7 @@ public class PainelGrafo extends JPanel implements MouseListener, MouseMotionLis
 					try {
 						peso = Double.parseDouble(JOptionPane.showInputDialog(this, "Digite o peso da aresta."));
 						
-						if (peso.compareTo(0D) == 0) {
+						if (peso < 0D) {
 							throw new Exception("Preencha um valor!");
 						}
 						

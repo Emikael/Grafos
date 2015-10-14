@@ -195,19 +195,19 @@ public class GrafoDeConexidade extends Grafo {
 	 * Método baseado no Algoritmo de Dijkstra para encontrar o menor caminho entre dois vertices.
 	 */
 	private int encontrarMenorCaminhoParaO(Vertice verticeInicio, Vertice verticeFim) {
-		List<Vertice> verticesVisitados = new ArrayList<Vertice>();
+		List<Vertice> verticesNaoVisitados = new ArrayList<Vertice>();
 		List<Vertice> menorCaminho = new ArrayList<Vertice>();
 		
-		int verticesNaoVisitados = _vertices.size();
 		Vertice verticeAtual = verticeInicio;
-		verticesVisitados.add(verticeAtual);
+		verticesNaoVisitados.add(verticeAtual);
 		menorCaminho.add(verticeAtual);
 
 		setaDistanciasDosVertices(verticeAtual);
 		
-		while (verticesNaoVisitados != 0) {
+		while (!verticesNaoVisitados.isEmpty()) {
 
-			verticeAtual = verticesVisitados.get(0);
+			verticeAtual = verticesNaoVisitados.get(0);
+			
 			for (int i=0; i < verticeAtual.getListaAdjacentes().size(); i++) {
 
 				final Vertice verticeVizinho = verticeAtual.getListaAdjacentes().get(i).getFim();                               
@@ -220,9 +220,9 @@ public class GrafoDeConexidade extends Grafo {
 				
 				if (verticeVizinho.getDistancia() > (verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso())) {
 
-					verticeVizinho.setDistancia(verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso() * 2);
+					verticeVizinho.setDistancia(verticeAtual.getDistancia() + verticeAtual.getListaAdjacentes().get(i).getPeso());
 
-					if (verticeVizinho == verticeFim) {
+					if (verticeVizinho.equals(verticeFim)) {
 						menorCaminho.clear();
 						Vertice verticeDoCaminho = verticeVizinho;
 						menorCaminho.add(verticeVizinho);
@@ -235,14 +235,13 @@ public class GrafoDeConexidade extends Grafo {
 					}
 				}
 
-				verticesVisitados.add(verticeVizinho);
+				verticesNaoVisitados.add(verticeVizinho);
 			}
 
 			verticeAtual.setVisitar(true);
-			verticesNaoVisitados--;
-			verticesVisitados.remove(verticeAtual);
+			verticesNaoVisitados.remove(verticeAtual);
 			
-			Collections.sort(verticesVisitados);
+			Collections.sort(verticesNaoVisitados);
 		}
 		
 		return menorCaminho.size();

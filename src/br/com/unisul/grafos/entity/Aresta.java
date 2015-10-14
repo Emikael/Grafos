@@ -142,27 +142,6 @@ public class Aresta {
 			_conexaoEmAutoLaco.width = _larguraVerticeDeInicial;
 			_conexaoEmAutoLaco.height = _larguraVerticeDeInicial;
 			
-		/*
-		 * Verifica se a aresta não é direcionada, caso não for cria uma aresta em linha.
-		 */
-		} else if (!_direcionada) {
-			/*
-			 * Pega os angulos dos vertices.
-			 */
-			anguloInicial = Utils.getAngulo(_centroVerticeInicial, _centroVerticeFinal);
-			anguloFinal = Utils.getAngulo(_centroVerticeFinal, _centroVerticeInicial);
-			
-			/*
-			 * Pega os pontos2D dos vertices.
-			 */
-			pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial);
-			pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal);
-			
-			/*
-			 * Seta a aresta em linha.
-			 */
-			_conexaoEmLinha = new Line2D.Double(pontoInicial, pontoFinal);
-			
 		} else {
 			
 			/*
@@ -174,28 +153,43 @@ public class Aresta {
 			double distanciaX, distanciaY, centroX, centroY, distancia, fatorX, fatorY;
 			
 			int contador = 1;
-			Point2D.Double inicio = null;
+			Point2D.Double posicaoInicial = null;
 			
 			/*
 			 * Realiza o calculo duas vezes para que o desenho da aresta fique alinhado aos vertices.
 			 */
 			while(contador <= 2 ) {
-				/*
-				 * Pega os angulos dos vertices.
-				 */
-				anguloInicial = Utils.getAngulo(_centroVerticeInicial, _controleDeCurva);
-				anguloFinal = Utils.getAngulo(_controleDeCurva, _centroVerticeFinal);
 				
-				/*
-				 * Pega os pontos2D dos vertices.
-				 */
-				pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial - ANGULO);
-				pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal - Math.PI + ANGULO);
+				if (!_direcionada) {
+					/*
+					 * Pega os angulos dos vertices para arestas não direcionadas.
+					 */
+					anguloInicial = Utils.getAngulo(_centroVerticeInicial, _centroVerticeFinal);
+					anguloFinal = Utils.getAngulo(_centroVerticeFinal, _centroVerticeInicial);
+					
+					/*
+					 * Pega os pontos2D dos vertices para aresta não direcionadas.
+					 */
+					pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial);
+					pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal);
+				
+				} else {
+					/*
+					 * Pega os angulos dos vertices para arestas direcionadas.
+					 */
+					anguloInicial = Utils.getAngulo(_centroVerticeInicial, _controleDeCurva);
+					anguloFinal = Utils.getAngulo(_controleDeCurva, _centroVerticeFinal);
+					/*
+					 * Pega os pontos2D dos vertices para arestas direcionadas.
+					 */
+					pontoInicial = Utils.getPontoNoVertice(_centroVerticeInicial, anguloInicial - ANGULO);
+					pontoFinal = Utils.getPontoNoVertice(_centroVerticeFinal, anguloFinal - Math.PI + ANGULO);
+				}
 				
 				/*
 				 * Pega o ponto inicial da aresta.
 				 */
-				inicio = new Point2D.Double(pontoInicial.getX(), pontoInicial.getY());
+				posicaoInicial = new Point2D.Double(pontoInicial.getX(), pontoInicial.getY());
 				/*
 				 * Seta a posição final da aresta.
 				 */
@@ -204,14 +198,14 @@ public class Aresta {
 				/*
 				 * Pega as distancias das coordenadas X e Y da aresta.
 				 */
-				distanciaX = _posicaoFinal.x - inicio.x;
-				distanciaY = _posicaoFinal.y - inicio.y;
+				distanciaX = _posicaoFinal.x - posicaoInicial.x;
+				distanciaY = _posicaoFinal.y - posicaoInicial.y;
 				
 				/*
 				 * Pega os centros nas coordenadas X e Y da aresta.
 				 */
-				centroX = (inicio.x + _posicaoFinal.x) / 2.0;
-				centroY = (inicio.y + _posicaoFinal.y) / 2.0;
+				centroX = (posicaoInicial.x + _posicaoFinal.x) / 2.0;
+				centroY = (posicaoInicial.y + _posicaoFinal.y) / 2.0;
 				
 				/*
 				 * Realiza calculo para a curvar as arestas.
@@ -229,10 +223,17 @@ public class Aresta {
 				contador++;
 			}
 			
-			/*
-			 * Seta a aresta com curvatura.
-			 */
-			_conexaoEmCurva.setCurve(inicio.x, inicio.y, _controleDeCurva.x, _controleDeCurva.y, _posicaoFinal.x, _posicaoFinal.y);
+			if (!_direcionada) {
+				/*
+				 * Seta a aresta em linha.
+				 */
+				_conexaoEmLinha = new Line2D.Double(posicaoInicial, _posicaoFinal);
+			} else {
+				/*
+				 * Seta a aresta com curvatura.
+				 */
+				_conexaoEmCurva.setCurve(posicaoInicial.x, posicaoInicial.y, _controleDeCurva.x, _controleDeCurva.y, _posicaoFinal.x, _posicaoFinal.y);
+			}
 		}
 	}
 	
