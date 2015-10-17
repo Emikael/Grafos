@@ -275,13 +275,13 @@ public class Aresta {
 		calcularAreaTexto(graphics2D.getFontMetrics());
 		
 		/*
-		 * Se a aresta não for direcionada, cria uma aresta em linha.
+		 * Se a aresta estiver ligando o mesmo vertice, cria uma aresta em auto laço
 		 */
 		if (_isMesmoVertice) {
 			_conexaoEntreOsVertices = _conexaoEmAutoLaco;
 			
 		/*
-		 * Se a aresta estiver ligando o mesmo vertice, cria uma aresta em auto laço.
+		 * Se a aresta não for direcionada, cria uma aresta em linha.
 		 */
 		} else if (!_direcionada) {
 			_conexaoEntreOsVertices = _conexaoEmLinha;
