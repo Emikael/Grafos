@@ -2,6 +2,7 @@ package br.com.unisul.grafos.impl;
 
 import java.util.List;
 
+import br.com.unisul.grafos.controller.MostraResultadoDoGrafo;
 import br.com.unisul.grafos.entity.Aresta;
 import br.com.unisul.grafos.entity.Vertice;
 
@@ -26,36 +27,51 @@ public class GrafoListaAdj extends Grafo {
      * Metodo que monta e exibi a representação do grafo
      * no painel de saida.
      */
-	public String exibiGrafo() {
-		final StringBuilder grafo = new StringBuilder();
+	public void exibiGrafo() {
     	Vertice verticeFim = new Vertice();
+    	final Object[][] dados = new Object[_vertices.size()][_vertices.size() + 1];
     	
-    	grafo.append("#### GRAFO LISTA DE ADJACENTE ####\n");
-    	for (Vertice verticeInicio : _vertices) {
+    	for (int indiceInicial = 0; indiceInicial < _vertices.size(); indiceInicial++) {
+    		final Vertice verticeInicio = _vertices.get(indiceInicial);
+    		
     		if (verticeInicio.getListaAdjacentes().isEmpty()) {
 				continue;
 			}
     		
-            grafo.append(verticeInicio.getId()).append(" --> ");
-            
+    		dados[indiceInicial][0] = verticeInicio.getId();
+    		
             /*
              * Preenche a saido do grafo com as vertices adjacentes.
              */
-            for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
-                verticeFim = aresta.getFim();
-                grafo.append(verticeFim.getId()).append(", ");
+    		for (int indiceFinal = 0; indiceFinal < verticeInicio.getListaAdjacentes().size(); indiceFinal++) {
+                final Aresta aresta = verticeInicio.getListaAdjacentes().get(indiceFinal);
+    			verticeFim = aresta.getFim();
+                dados[indiceInicial][indiceFinal + 1] = verticeFim.getId();
             }
-            
-            if (grafo.toString().endsWith(", ")) {
-            	grafo.delete(grafo.length() - 2, grafo.length());
-            }
-
-            grafo.append("\n");
         }
     	
-    	grafo.append("-------------------------------------------------------------------\n");
+    	/*
+    	 * Gera as colunas para mostrar no resultado do Grafo
+    	 */
+    	final String[] colunas = getColunas();
     	
-        return grafo.toString();
+    	/*
+    	 * Mostra o resultado do Grafo.
+    	 */
+    	MostraResultadoDoGrafo resultado = new MostraResultadoDoGrafo("Grafo Lista de Adjacencia", colunas, dados);
+    	resultado.mostraResultado();
+	}
+
+	/*
+	 * Gera as colunas para mostrar no resultado do grafo apartir do numero de vertices.
+	 */
+	private String[] getColunas() {
+		String[] colunas = new String[_vertices.size()];
+		for (int i = 0; i < _vertices.size(); i++) {
+			colunas[i] = "->";
+		}
+		
+		return colunas;
 	}
 
 }

@@ -20,7 +20,7 @@ import br.com.unisul.grafos.impl.Utils;
  * Controla as informações sobre cada aresta
  * e a desenha na tela.
  */
-public class Aresta {
+public class Aresta implements Comparable<Aresta> {
 
 	private Vertice _inicio;
     private Vertice _fim;
@@ -332,6 +332,11 @@ public class Aresta {
 
 	public void setValorado(boolean valorado) {
 		this._valorado = valorado;
+	}
+
+	@Override
+	public int compareTo(Aresta aresta) {
+		return this._peso.compareTo(aresta.getPeso());
 	}
 
 }

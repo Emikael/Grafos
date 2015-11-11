@@ -79,6 +79,7 @@ public class Tela extends JFrame {
 		 * Cria uma nova instancia do Grafo
 		 */
 		_grafo = new Grafo();
+		MostraResultadoDoGrafo.OWNER = this;
 		
 		getContentPane().add(getPainelInfo(), BorderLayout.NORTH);
 		getContentPane().add(getPainelGrafo(), BorderLayout.CENTER);
@@ -284,7 +285,7 @@ public class Tela extends JFrame {
 	public void geraGrafoAPartirDo(Grafo grafo) {
 		try {
 			if (grafo instanceof GrafoListaAdj) {
-				_saidaDoGrafo.append(((GrafoListaAdj) grafo).exibiGrafo());
+				((GrafoListaAdj) grafo).exibiGrafo();
 			}
 			
 			if (grafo instanceof GrafoMatrizAdj) {
