@@ -166,4 +166,8 @@ public class Grafo {
     	return _arestas;
     }
     
+    public void setArestas(List<Aresta> arestas) {
+    	this._arestas = arestas;
+    }
+    
 }

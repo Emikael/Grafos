@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import br.com.unisul.grafos.impl.Grafo;
+import br.com.unisul.grafos.impl.GrafoArvoreGeradora;
 import br.com.unisul.grafos.impl.GrafoDeConexidade;
 import br.com.unisul.grafos.impl.GrafoListaAdj;
 import br.com.unisul.grafos.impl.GrafoListaArestas;
@@ -284,25 +285,29 @@ public class Tela extends JFrame {
 	 */
 	public void geraGrafoAPartirDo(Grafo grafo) {
 		try {
-			if (grafo instanceof GrafoListaAdj) {
-				((GrafoListaAdj) grafo).exibiGrafo();
-			}
+			GrafoArvoreGeradora arvore = new GrafoArvoreGeradora(_grafo);
+			arvore.geraArvoreDeKruskal();
+			_painelGrafo.repaint();
 			
-			if (grafo instanceof GrafoMatrizAdj) {
-				_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
-			}
-			
-			if (grafo instanceof GrafoMatrizIncidencia) {
-				_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
-			}
-			
-			if (grafo instanceof GrafoListaArestas) {
-				_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
-			}
-			
-			if (grafo instanceof GrafoDeConexidade) {
-				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
-			}
+//			if (grafo instanceof GrafoListaAdj) {
+//				((GrafoListaAdj) grafo).exibiGrafo();
+//			}
+//			
+//			if (grafo instanceof GrafoMatrizAdj) {
+//				_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
+//			}
+//			
+//			if (grafo instanceof GrafoMatrizIncidencia) {
+//				_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
+//			}
+//			
+//			if (grafo instanceof GrafoListaArestas) {
+//				_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
+//			}
+//			
+//			if (grafo instanceof GrafoDeConexidade) {
+//				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
+//			}
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());
