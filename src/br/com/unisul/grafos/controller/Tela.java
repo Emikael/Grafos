@@ -53,6 +53,7 @@ public class Tela extends JFrame {
 	private JButton _botaoListaArestas;
 	private JButton _botaoNovoGrafo;
 	private JButton _botaoConexidade;
+	private JButton _botaoArvoreDeCobertura;
 	
 	private JTextArea _saidaDoGrafo;
 	
@@ -269,11 +270,21 @@ public class Tela extends JFrame {
 				}
 			});
 			
+			_botaoArvoreDeCobertura = new JButton("Gear Arvore");
+			_botaoArvoreDeCobertura.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					geraGrafoAPartirDo(new GrafoArvoreGeradora(_grafo));
+				}
+			});
+			
 			_painelBotoes.add(_botaoListaAdj);
 			_painelBotoes.add(_botaoMatrizAdj);
 			_painelBotoes.add(_botaoMatrizIncidencia);
 			_painelBotoes.add(_botaoListaArestas);
 			_painelBotoes.add(_botaoConexidade);
+			_painelBotoes.add(_botaoArvoreDeCobertura);
 		
 		}
 		return _painelBotoes;
@@ -285,29 +296,31 @@ public class Tela extends JFrame {
 	 */
 	public void geraGrafoAPartirDo(Grafo grafo) {
 		try {
-			GrafoArvoreGeradora arvore = new GrafoArvoreGeradora(_grafo);
-			arvore.geraArvoreDeKruskal();
-			_painelGrafo.repaint();
 			
-//			if (grafo instanceof GrafoListaAdj) {
-//				((GrafoListaAdj) grafo).exibiGrafo();
-//			}
-//			
-//			if (grafo instanceof GrafoMatrizAdj) {
-//				_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
-//			}
-//			
-//			if (grafo instanceof GrafoMatrizIncidencia) {
-//				_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
-//			}
-//			
-//			if (grafo instanceof GrafoListaArestas) {
-//				_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
-//			}
-//			
-//			if (grafo instanceof GrafoDeConexidade) {
-//				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
-//			}
+			if (grafo instanceof GrafoListaAdj) {
+				((GrafoListaAdj) grafo).exibiGrafo();
+			}
+			
+			if (grafo instanceof GrafoMatrizAdj) {
+				_saidaDoGrafo.append(((GrafoMatrizAdj) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoMatrizIncidencia) {
+				_saidaDoGrafo.append(((GrafoMatrizIncidencia) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoListaArestas) {
+				_saidaDoGrafo.append(((GrafoListaArestas) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoDeConexidade) {
+				_saidaDoGrafo.append(((GrafoDeConexidade) grafo).exibiGrafo());
+			}
+			
+			if (grafo instanceof GrafoArvoreGeradora) {
+				((GrafoArvoreGeradora) grafo).geraArvoreDeKruskal();
+				_painelGrafo.repaint();
+			}
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Ocorreu um erro ao gerar o grafo! Erro: " + e.getMessage());
@@ -367,6 +380,14 @@ public class Tela extends JFrame {
 	public static void main(String[] args) {
 		final Tela tela = new Tela("Trabalho Grafos");
 		tela.setVisible(true);
+	}
+
+	public JButton get_botaoArvoreDeCobertura() {
+		return _botaoArvoreDeCobertura;
+	}
+
+	public void set_botaoArvoreDeCobertura(JButton _botaoArvoreDeCobertura) {
+		this._botaoArvoreDeCobertura = _botaoArvoreDeCobertura;
 	}
 
 }
