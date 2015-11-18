@@ -1,6 +1,6 @@
-# Projeto-Grafos
+# Representação de Grafos
 
-Trabalho da materia Grafos sobre implementação de grafos dos tipos:  
+implementação de grafos dos tipos:  
  
  -Listas de adjacência  
  
@@ -10,4 +10,6 @@ Trabalho da materia Grafos sobre implementação de grafos dos tipos:
  
  -Listas de arestas
  
- -Matriz de Conexidade
+ -Matriz de Conexidade - Algoritmo de Dijkstra
+ 
+ -Arvore de cobertura minima - Algoritmo de Kruskal
