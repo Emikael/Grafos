@@ -149,7 +149,7 @@ public class GrafoDeConexidade extends Grafo {
 	private boolean isVerticeTemConexao(Vertice vertice) {
 		for (Vertice verticeInicio : _vertices) {
 			for (Aresta aresta : verticeInicio.getListaAdjacentes()) {
-				if (aresta.getInicio().getId() == vertice.getId() || aresta.getFim().getId() == vertice.getId()) {
+				if (aresta.getInicio().getId().equals(vertice.getId()) || aresta.getFim().getId().equals(vertice.getId())) {
 					return true;
 				}
 			}
@@ -209,7 +209,7 @@ public class GrafoDeConexidade extends Grafo {
 	 * Método que retorna o grau de conexidade entre os vertices.
 	 */
 	private int getGrauDeConexidadeEntreOsVertices(Vertice verticeInicial, Vertice verticeFinal) {
-		if (verticeInicial.getId() == verticeFinal.getId()) {
+		if (verticeInicial.getId().equals(verticeFinal.getId())) {
 			return 0;
 		}
 		
@@ -372,7 +372,7 @@ public class GrafoDeConexidade extends Grafo {
 			 * Se o vertice que está sendo verificado é o atual
 			 * recebe a distancia 0, caso contrario receberá a distancia infinita.
 			 */
-			if (vertice.getId() == verticeAtual.getId()) {
+			if (vertice.getId().equals(verticeAtual.getId())) {
 				vertice.setDistancia(0D);
 			} else {
 				vertice.setDistancia(Double.POSITIVE_INFINITY);

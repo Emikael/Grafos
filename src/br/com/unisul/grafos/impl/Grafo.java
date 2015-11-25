@@ -74,7 +74,7 @@ public class Grafo {
      */
     private Aresta existeArestaComOsVerticfes(Vertice fim, Vertice inicio) {
     	for (Aresta aresta : _arestas) {
-			if (aresta.getInicio().getId() == fim.getId() && aresta.getFim().getId() == inicio.getId()) {
+			if (aresta.getInicio().getId().equals(fim.getId()) && aresta.getFim().getId().equals(inicio.getId())) {
 				return aresta;
 			}
 		}

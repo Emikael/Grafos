@@ -177,4 +177,37 @@ public class GrafoArvoreGeradora extends Grafo {
 		_arestas.clear();
 		_arestas.addAll(arvore);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((_arestas == null) ? 0 : _arestas.hashCode());
+		result = prime * result + ((_vertices == null) ? 0 : _vertices.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GrafoArvoreGeradora other = (GrafoArvoreGeradora) obj;
+		if (_arestas == null) {
+			if (other._arestas != null)
+				return false;
+		} else if (!_arestas.equals(other._arestas))
+			return false;
+		if (_vertices == null) {
+			if (other._vertices != null)
+				return false;
+		} else if (!_vertices.equals(other._vertices))
+			return false;
+		return true;
+	}
+	
+	
 }

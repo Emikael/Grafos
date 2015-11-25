@@ -42,7 +42,7 @@ public class GrafoMatrizIncidencia extends Grafo {
     			 * Se o vertice inicial da aresta for igual ao 
     			 * vertice que está sendo verificado seta 1.
     			 */
-				if (vertice.getId() == aresta.getInicio().getId()) {
+				if (vertice.getId().equals(aresta.getInicio().getId())) {
 					grafo.append("|    1   |");
 					continue;
 				}
@@ -51,7 +51,7 @@ public class GrafoMatrizIncidencia extends Grafo {
     			 * Se o vertice final da aresta for igual ao 
     			 * vertice que está sendo verificado seta -1.
     			 */
-				if (vertice.getId() == aresta.getFim().getId()) {
+				if (vertice.getId().equals(aresta.getFim().getId())) {
 					grafo.append("|   -1   |");
 					continue;
 				}
