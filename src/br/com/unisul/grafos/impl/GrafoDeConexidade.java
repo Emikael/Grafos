@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import br.com.unisul.grafos.entity.Aresta;
 import br.com.unisul.grafos.entity.Vertice;
 
@@ -360,6 +362,7 @@ public class GrafoDeConexidade extends Grafo {
 		 * Mostrando quantos vertices o vertice inicial teria que passar
 		 * para chegar ao vertice final.
 		 */
+		JOptionPane.showMessageDialog(null, "Menor distancia é: " + menorCaminho.size());
 		return menorCaminho.size();
 	}
 
